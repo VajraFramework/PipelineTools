@@ -1,0 +1,14 @@
+bin
+deps
+obj
+Resources
+*.exe
+*.ilk
+*.pdb
+*.DS_Store*
+*.plugins
+*.metadata
+RemoteSystemsTempFiles
+*.swp
+*.swo
+*.user

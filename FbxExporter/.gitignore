@@ -1,0 +1,8 @@
+*.DS_Store*
+*.plugins
+*.metadata
+RemoteSystemsTempFiles
+*.swp
+*.swo
+*.user
+Debug
