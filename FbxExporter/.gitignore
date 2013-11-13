@@ -6,3 +6,6 @@ RemoteSystemsTempFiles
 *.swo
 *.user
 Debug
+*.sdf
+*.opensdf
+/*.suo

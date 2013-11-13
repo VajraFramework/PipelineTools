@@ -10,6 +10,7 @@
 #include "Exporter/Parsers/ParseMeshHelper.h"
 #include "Exporter/Utilities/Utilities.h"
 
+#include <fstream>
 #include <vector>
 
 // Forward Declarations:
@@ -20,6 +21,14 @@ Model* GetModel(FbxNode* node);
 Mesh* GetMesh(FbxNode* node);
 
 Scene* ParseScene(FbxManager*& fbxManager, std::string fbxFileName) {
+
+	// Check if file exists:
+	{
+		std::ifstream fbxFile;
+		fbxFile.open(fbxFileName, std::ios::in);
+		VERIFY_LOG(fbxFile.is_open(), "File exists and is readable\n");
+		fbxFile.close();
+	}
 
 	FbxScene* fbxScene = nullptr;
 	fbxScene = FbxScene::Create(fbxManager, "NewScene");

@@ -16,10 +16,14 @@
 
 #include "FbxSdk/include/fbxsdk.h"
 
-#define SAMPLE_FILENAME "Resources/Import/Assassin.fbx"
+#include <iostream>
+
+// #define SAMPLE_FILENAME "Resources/Import/Assassin.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/flyer.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/monkey.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/TexturedCube.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/texturedCubeBlender.fbx"
+#define SAMPLE_FILENAME "Resources/Import/texturedCubeMaya.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/twoplanes.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/SimpleCube.fbx"
 
@@ -32,7 +36,6 @@ int main (int argc, char** argv) {
 
     FbxManager* fbxManager = NULL;
     FbxScene* lScene = NULL;
-    bool lResult;
 
     // Prepare the FBX SDK.
     InitializeSdkObjects(fbxManager);
@@ -43,5 +46,7 @@ int main (int argc, char** argv) {
 
     //Destroy all objects created by the FBX SDK.
     DestroySdkObjects(fbxManager, true);
+
+	std::cin.get();
     return 0;
 }

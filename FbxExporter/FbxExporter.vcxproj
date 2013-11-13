@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>.\Build</OutDir>
+    <OutDir>.\Build\</OutDir>
     <IncludePath>./Source;./Source/FbxSdk/include/;$(IncludePath)</IncludePath>
     <ExecutablePath>./Build;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
