@@ -6,6 +6,7 @@
 #include "Exporter/Definitions/Polylist.h"
 #include "Exporter/Definitions/Scene.h"
 #include "Exporter/Definitions/Vertex.h"
+#include "Exporter/Parsers/ParseAnimationHelper.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Parsers/ParseMeshHelper.h"
 #include "Exporter/Utilities/Utilities.h"
@@ -50,6 +51,11 @@ Scene* ParseScene(FbxManager*& fbxManager, std::string fbxFileName) {
 		ASSERT_LOG(rootNode != nullptr, "\nGot root node of the fbxScene");
 
 		ParseNodesRecursively(rootNode, scene);
+	}
+
+	{
+		// Look for animations:
+		ParseSceneForAnimations(fbxScene);
 	}
 
 	return scene;

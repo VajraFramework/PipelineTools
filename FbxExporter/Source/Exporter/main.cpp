@@ -29,9 +29,6 @@
 
 #define EXPORT_PATH "Resources/Export/Models/"
 
-//get mesh normals info
-void GetNormals(FbxNode* pNode);
-
 int main (int argc, char** argv) {
 
     FbxManager* fbxManager = NULL;
