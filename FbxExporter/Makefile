@@ -29,7 +29,9 @@ DEPSDIR      = $(BUILDDIR)/deps
 RESOURCESDIR_NAME      = Resources
 FBXSDK 		= ./Source/FbxSdk
 LIBDIR		= $(FBXSDK)/lib/gcc4/x64/debug
-INCDIR      = ./Source/
+INCDIRS     = ./Source/ $(FBXSDK)/include/
+INC         = $(addprefix -I, $(INCDIRS))
+
 CWD   		= .
 
 LOCAL_SRC_DIRS = $(CWD)/Source/
@@ -58,7 +60,7 @@ FBXSDK_LIB   = -lfbxsdk
 CXXFLAGS += -DFBXSDK_SHARED
 RPATH_DEF = -Wl,-rpath $(PWD)/$(LIBDIR)
 
-LIBS = $(FBXSDK_LIB) -lm -lrt -luuid -lstdc++ -lpthread -ldl
+LIBS = $(FBXSDK_LIB) -lm -lrt -luuid -lstdc++ -lpthread -ldl -L/usr/./lib/debug/lib/x86_64-linux-gnu/ -ldl-2.17
 
 
 all: build_all
@@ -81,8 +83,8 @@ $(TARGET): $(OBJECTS)
 -include $(DEPS)
 
 $(OBJDIR)/%.o: %.c*
-	$(CC) $(CXXFLAGS) -I$(INCDIR) -c $< -o $@
-	$(CC) -MM $(CXXFLAGS) -I$(INCDIR) -c $< -o $(DEPSDIR)/$*.d
+	$(CC) $(CXXFLAGS) $(INC) -c $< -o $@
+	$(CC) -MM $(CXXFLAGS) $(INC) -c $< -o $(DEPSDIR)/$*.d
 	@mv -f $(DEPSDIR)/$*.d $(DEPSDIR)/$*.d.tmp
 	@sed -e 's|.*:|$(OBJDIR)/$*.o:|' < $(DEPSDIR)/$*.d.tmp > $(DEPSDIR)/$*.d
 	@rm -f $*.d.tmp
