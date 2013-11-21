@@ -118,6 +118,8 @@ void PrintVectorOfVec2(std::vector<glm::vec2>* vectorOfVec2, std::string printAs
 	printf("\n");
 }
 
+#define DEBUG_PRINT_VERTEXES_TO_CONSOLE 0
+
 void PrintMesh(Mesh* mesh) {
 	printf("\nMesh: %s", mesh->name.c_str());
 
@@ -137,8 +139,10 @@ void PrintMesh(Mesh* mesh) {
 		texCoords->push_back(vertex->texCoords);
 	}
 
+#if DEBUG_PRINT_VERTEXES_TO_CONSOLE
 	PrintVectorOfVec3(positions, "Positions");
 	PrintVectorOfVec3(normals, "Normals");
 	PrintVectorOfVec2(texCoords, "TexCoords");
+#endif
 
 }

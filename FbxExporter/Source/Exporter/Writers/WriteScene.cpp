@@ -19,7 +19,6 @@ void WriteGlmVec2ToFile(glm::vec2 v, std::ofstream& file);
 void WriteVectorOfVec3ToFile(std::vector<glm::vec3>* vectorOfVec3, std::ofstream& file);
 void WriteVectorOfVec2ToFile(std::vector<glm::vec2>* vectorOfVec2, std::ofstream& file);
 
-
 void exportMesh(Mesh* mesh, std::ofstream& file) {
 	if (mesh == nullptr) {
 		return;

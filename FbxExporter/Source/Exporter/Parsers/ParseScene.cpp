@@ -6,7 +6,7 @@
 #include "Exporter/Definitions/Polylist.h"
 #include "Exporter/Definitions/Scene.h"
 #include "Exporter/Definitions/Vertex.h"
-#include "Exporter/Parsers/ParseAnimationHelper.h"
+#include "Exporter/Parsers/ParseAnimations/ParseAnimation.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Parsers/ParseMeshHelper.h"
 #include "Exporter/Utilities/Utilities.h"
@@ -42,6 +42,9 @@ Scene* ParseScene(FbxManager*& fbxManager, std::string fbxFileName) {
 		sceneLoadedSuccessfully = LoadScene(fbxManager, fbxScene, fbxFileName.c_str());
 		ASSERT_LOG(sceneLoadedSuccessfully, "Scene from file %s loaded successfully", fbxFileName.c_str());
 
+		// Look for Animation Layers:
+		LoadAnimationLayers(fbxScene);
+
 		scene = new Scene();
 		scene->name = fbxFileName;
 	}
@@ -53,10 +56,6 @@ Scene* ParseScene(FbxManager*& fbxManager, std::string fbxFileName) {
 		ParseNodesRecursively(rootNode, scene);
 	}
 
-	{
-		// Look for animations:
-		ParseSceneForAnimations(fbxScene);
-	}
 
 	return scene;
 }
@@ -75,10 +74,12 @@ void ParseNode(FbxNode* node, Scene* outScene) {
 	printf("\nCurrent node: %s", node->GetName());
 
 	Model* model = GetModel(node);
-
 	if (model != nullptr) {
 		outScene->models->push_back(model);
 	}
+
+	ProcessAnimCurvesForNode(node);
+
 }
 
 Model* GetModel(FbxNode* node) {
