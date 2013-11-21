@@ -10,6 +10,9 @@
 #include <string>
 #include <vector>
 
-void processAnimCurvesForNodeInAllAnimationLayers(FbxNode* fbxNode, std::vector<AnimationLayer*>& animationLayers);
+// Forward Declarations:
+class RigidAnimationData;
+
+RigidAnimationData* processAnimCurvesForNodeInAllAnimationLayers(FbxNode* fbxNode, std::vector<AnimationLayer*>& animationLayers);
 
 #endif // PARSE_ANIMATION_HELPER_H

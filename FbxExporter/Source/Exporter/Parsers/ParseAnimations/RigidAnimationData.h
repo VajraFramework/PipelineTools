@@ -35,4 +35,21 @@ private:
 	std::vector<RigidAnimationKeyframe*> keyframes;
 };
 
+class RigidAnimationKeyframe {
+public:
+	RigidAnimationKeyframe() {
+		this->translation = glm::vec3(0.0f, 0.0f, 0.0f);
+		this->rotation    = glm::vec3(0.0f, 0.0f, 0.0f);
+		this->scaling     = glm::vec3(1.0f, 1.0f, 1.0f);
+	}
+	~RigidAnimationKeyframe() {}
+
+	float time;
+	glm::vec3 translation;
+	glm::vec3 rotation;
+	glm::vec3 scaling;
+
+private:
+};
+
 #endif // RIGID_ANIMATION_DATA_H

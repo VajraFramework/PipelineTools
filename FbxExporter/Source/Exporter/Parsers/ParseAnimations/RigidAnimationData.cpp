@@ -3,16 +3,6 @@
 
 #include <algorithm>
 
-class RigidAnimationKeyframe {
-public:
-	float time;
-	glm::vec3 translation;
-	glm::vec3 rotation;
-	glm::vec3 scaling;
-
-private:
-};
-
 void setFieldInPropertyVector(RigidAnimationPropertyField_t field, glm::vec3& propertyVector, float fieldValue) {
 	switch (field) {
 	case PROPERTY_FIELD_X:
