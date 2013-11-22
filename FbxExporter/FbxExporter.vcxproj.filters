@@ -50,6 +50,15 @@
     <ClCompile Include="Source\Exporter\Writers\WriteScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\RigidAnimationData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Exporter\Common\Common.h">
@@ -94,5 +103,8 @@
     <ClInclude Include="Source\Exporter\Writers\WriteScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\RigidAnimationData.h" />
   </ItemGroup>
 </Project>

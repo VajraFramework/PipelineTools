@@ -5,6 +5,7 @@
 #include "Exporter/Definitions/Model.h"
 #include "Exporter/Definitions/Polylist.h"
 #include "Exporter/Definitions/Scene.h"
+#include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
 #include "Exporter/Utilities/Utilities.h"
 #include "Exporter/Writers/WriteScene.h"
 
@@ -12,6 +13,10 @@
 #include <vector>
 
 #define MODEL_FILE_EXTENSION ".model"
+#define ANIMCLIPS_FILE_EXTENSION ".animclips"
+
+#define ANIMATION_TYPE_STRING_RIGID "RIGID"
+#define CLIPNAME_STRING "CLIPNAME"
 
 // Forward Declarations:
 void WriteGlmVec3ToFile(glm::vec3 v, std::ofstream& file);
@@ -103,6 +108,48 @@ void exportModel(Model* model, std::ofstream& file) {
 	printf("\n");
 }
 
+void exportRigidAnimation(Model* model, RigidAnimationData* rigidAnimationData, std::ofstream& file) {
+	printf("\nExporting rigidAnimationData for clip: %s", rigidAnimationData->GetName().c_str());
+
+	if (!file.good()) {
+		VERIFY(0, "Failed to open animclips file for model %s", model->name.c_str());
+	}
+
+	file << CLIPNAME_STRING << "#" << rigidAnimationData->GetName() << "\n";
+
+	int numKeyframes = rigidAnimationData->GetNumKeyframes();
+	file << numKeyframes << "\n";
+	for (int i = 0; i < numKeyframes; ++i) {
+		RigidAnimationKeyframe* keyframe = rigidAnimationData->GetKeyframeAtIndex(i);
+
+		file << keyframe->time << " ";
+		WriteGlmVec3ToFile(keyframe->translation, file);  file << " ";
+		WriteGlmVec3ToFile(keyframe->rotation, file);  file << " ";
+		WriteGlmVec3ToFile(keyframe->scaling, file);  file << " ";
+
+		file << "\n";
+	}
+}
+
+void exportRigidAnimations(Model* model, std::ofstream& file) {
+	printf("\nExporting animclips for model: %s", model->name.c_str());
+
+	if (!file.good()) {
+		VERIFY(0, "Failed to open animclips file for model %s", model->name.c_str());
+	}
+
+	file << ANIMATION_TYPE_STRING_RIGID << "\n\n";
+
+	int numRigidAnimations = model->rigidAnimationDatas->size();
+	file << numRigidAnimations << "\n\n";
+
+	for (int i = 0; i < numRigidAnimations; ++i) {
+		RigidAnimationData* rigidAnimationData = model->rigidAnimationDatas->at(i);
+		exportRigidAnimation(model, rigidAnimationData, file);
+	}
+
+}
+
 void exportScene(Scene* scene, std::string basePath) {
 	int numModelsInScene = scene->models->size();
 	printf("\nNumber of models in scene: %d", numModelsInScene);
@@ -111,14 +158,25 @@ void exportScene(Scene* scene, std::string basePath) {
 
 		Model* model = scene->models->at(i);
 
+		// Open new model file for writing:
 		std::string modelFilePath = basePath + model->name + MODEL_FILE_EXTENSION;
 		std::ofstream modelFile(modelFilePath, std::ios_base::out);
-
+		//
 		modelFile << MODEL_FORMAT_VERSION_NUMBER << "\n";
-
+		//
 		exportModel(model, modelFile);
-
+		//
 		modelFile.close();
+
+		// Open a new animclips file for writing:
+		std::string animclipsFilePath = basePath + model->name + ANIMCLIPS_FILE_EXTENSION;
+		std::ofstream animclipsFile(animclipsFilePath, std::ios_base::out);
+		//
+		animclipsFile << ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
+		//
+		exportRigidAnimations(model, animclipsFile);
+		//
+		animclipsFile.close();
 	}
 
 }

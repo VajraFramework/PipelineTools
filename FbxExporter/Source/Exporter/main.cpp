@@ -23,7 +23,8 @@
 // #define SAMPLE_FILENAME "Resources/Import/monkey.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/TexturedCube.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/texturedCubeBlender.fbx"
-#define SAMPLE_FILENAME "Resources/Import/texturedCubeMaya.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/texturedCubeMaya.fbx"
+#define SAMPLE_FILENAME "Resources/Import/pyramid.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/twoplanes.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/SimpleCube.fbx"
 

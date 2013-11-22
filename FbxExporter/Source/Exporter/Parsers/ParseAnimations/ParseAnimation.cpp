@@ -1,5 +1,6 @@
 #include "Exporter/Parsers/ParseAnimations/ParseAnimation.h"
 #include "Exporter/Parsers/ParseAnimations/ParseAnimationHelper.h"
+#include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
 
 std::vector<AnimationLayer*> gAnimationLayers;
 std::vector<AnimationLayer*>& GetGlobalAnimationLayers() {
@@ -37,6 +38,6 @@ void LoadAnimationLayers(FbxScene* fbxScene) {
 	printf("\nDone parsing rigid animations\n");
 }
 
-void ProcessAnimCurvesForNode(FbxNode* fbxNode) {
-	processAnimCurvesForNodeInAllAnimationLayers(fbxNode, GetGlobalAnimationLayers());
+std::vector<RigidAnimationData*>* ProcessAnimCurvesForNode(FbxNode* fbxNode) {
+	return processAnimCurvesForNodeInAllAnimationLayers(fbxNode, GetGlobalAnimationLayers());
 }

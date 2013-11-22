@@ -8,6 +8,7 @@
 
 // Forward Declarations:
 class Mesh;
+class RigidAnimationData;
 
 class Model {
 public:
@@ -17,6 +18,7 @@ public:
 	std::string name;
 
 	Mesh* mesh;
+	std::vector<RigidAnimationData*>* rigidAnimationDatas;
 
 	glm::vec3 initialPosition;
 	glm::vec3 initialRotation;

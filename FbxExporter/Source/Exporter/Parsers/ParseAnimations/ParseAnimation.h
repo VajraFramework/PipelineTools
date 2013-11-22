@@ -9,6 +9,9 @@
 #include <string>
 #include <vector>
 
+// Forward Declarations:
+class RigidAnimationData;
+
 struct AnimationLayer {
 public:
 	FbxAnimLayer* fbxAnimLayer;
@@ -19,6 +22,6 @@ private:
 std::vector<AnimationLayer*>& GetGlobalAnimationLayers();
 
 void LoadAnimationLayers(FbxScene* fbxScene);
-void ProcessAnimCurvesForNode(FbxNode* fbxNode);
+std::vector<RigidAnimationData*>* ProcessAnimCurvesForNode(FbxNode* fbxNode);
 
 #endif // PARSE_ANIMATION_H

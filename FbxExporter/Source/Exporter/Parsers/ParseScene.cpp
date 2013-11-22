@@ -7,6 +7,7 @@
 #include "Exporter/Definitions/Scene.h"
 #include "Exporter/Definitions/Vertex.h"
 #include "Exporter/Parsers/ParseAnimations/ParseAnimation.h"
+#include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Parsers/ParseMeshHelper.h"
 #include "Exporter/Utilities/Utilities.h"
@@ -74,11 +75,15 @@ void ParseNode(FbxNode* node, Scene* outScene) {
 	printf("\nCurrent node: %s", node->GetName());
 
 	Model* model = GetModel(node);
+
+	std::vector<RigidAnimationData*>* rigidAnimationDatas = ProcessAnimCurvesForNode(node);
+	if (model != nullptr) {
+		model->rigidAnimationDatas = rigidAnimationDatas;
+	}
+
 	if (model != nullptr) {
 		outScene->models->push_back(model);
 	}
-
-	ProcessAnimCurvesForNode(node);
 
 }
 

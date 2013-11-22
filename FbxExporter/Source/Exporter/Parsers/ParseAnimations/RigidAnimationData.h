@@ -24,6 +24,9 @@ class RigidAnimationData {
 public:
 	void AddKeyframeForPropertyField(RigidAnimationProperty_t property, RigidAnimationPropertyField_t field, float value, float time);
 
+	std::string GetName() { return this->name; }
+	void SetName(std::string newName);
+
 	int GetNumKeyframes() { return this->keyframes.size(); }
 	RigidAnimationKeyframe* GetKeyframeAtIndex(unsigned int index);
 
@@ -32,6 +35,7 @@ private:
 	// Utility Functions:
 	RigidAnimationKeyframe* getKeyframeAtTime(float time);
 
+	std::string name;
 	std::vector<RigidAnimationKeyframe*> keyframes;
 };
 

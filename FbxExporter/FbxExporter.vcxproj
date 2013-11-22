@@ -76,6 +76,9 @@
     <ClCompile Include="Source\Exporter\Definitions\Scene.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Vertex.cpp" />
     <ClCompile Include="Source\Exporter\main.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\RigidAnimationData.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseMeshHelper.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseScene.cpp" />
     <ClCompile Include="Source\Exporter\Utilities\Utilities.cpp" />
@@ -92,6 +95,9 @@
     <ClInclude Include="Source\Exporter\Definitions\Polylist.h" />
     <ClInclude Include="Source\Exporter\Definitions\Scene.h" />
     <ClInclude Include="Source\Exporter\Definitions\Vertex.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\RigidAnimationData.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseMeshHelper.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseScene.h" />
     <ClInclude Include="Source\Exporter\Utilities\Utilities.h" />

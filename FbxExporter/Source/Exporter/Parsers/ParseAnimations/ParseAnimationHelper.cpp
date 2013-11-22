@@ -6,12 +6,12 @@
 // Forward Declarations:
 void printKeyFrames(RigidAnimationData* rigidAnimationData);
 
-FbxAnimCurve* getFbxAnimCurveForPropertyField(FbxNode* fbxNode, FbxAnimLayer* fbxAnimLayer, RigidAnimationProperty_t property, RigidAnimationPropertyField_t field) {
+FbxAnimCurve* getFbxAnimCurveForPropertyField(FbxNode* fbxNode, FbxAnimLayer* fbxAnimLayer, RigidAnimationProperty_t animation_property, RigidAnimationPropertyField_t field) {
 	if (fbxAnimLayer == nullptr || fbxNode == nullptr) {
 		return nullptr;
 	}
 
-	switch (property) {
+	switch (animation_property) {
 	case PROPERTY_TRANSLATION:
 	{
 		switch (field) {
@@ -48,9 +48,11 @@ FbxAnimCurve* getFbxAnimCurveForPropertyField(FbxNode* fbxNode, FbxAnimLayer* fb
 		}
 	} break;
 	}
+
+	return nullptr;
 }
 
-void processAnimCurveForPropertyField_internal(FbxAnimCurve* fbxAnimCurve, RigidAnimationProperty_t property, RigidAnimationPropertyField_t field, RigidAnimationData* out_rigidAnimationData) {
+void processAnimCurveForPropertyField_internal(FbxAnimCurve* fbxAnimCurve, RigidAnimationProperty_t animation_property, RigidAnimationPropertyField_t field, RigidAnimationData* out_rigidAnimationData) {
 	int numKeys = fbxAnimCurve->KeyGetCount();
 	printf("\n_____________ Found anim curve with %d keys", numKeys);
 
@@ -58,21 +60,21 @@ void processAnimCurveForPropertyField_internal(FbxAnimCurve* fbxAnimCurve, Rigid
 		float keyValue = static_cast<float>(fbxAnimCurve->KeyGetValue(keyIdx));
         FbxTime keyTime  = fbxAnimCurve->KeyGetTime(keyIdx);
 
-        out_rigidAnimationData->AddKeyframeForPropertyField(property, field, keyValue, keyTime.GetSecondDouble());
+        out_rigidAnimationData->AddKeyframeForPropertyField(animation_property, field, keyValue, keyTime.GetSecondDouble());
 	}
 }
 
-void processAnimCurveForPropertyFieldForNode(FbxNode* fbxNode, AnimationLayer* animationLayer, RigidAnimationProperty_t property, RigidAnimationPropertyField_t field, RigidAnimationData* out_rigidAnimationData) {
-	FbxAnimCurve* fbxAnimCurve = getFbxAnimCurveForPropertyField(fbxNode, animationLayer->fbxAnimLayer, property, field);
+void processAnimCurveForPropertyFieldForNode(FbxNode* fbxNode, AnimationLayer* animationLayer, RigidAnimationProperty_t animation_property, RigidAnimationPropertyField_t field, RigidAnimationData* out_rigidAnimationData) {
+	FbxAnimCurve* fbxAnimCurve = getFbxAnimCurveForPropertyField(fbxNode, animationLayer->fbxAnimLayer, animation_property, field);
 	if (fbxAnimCurve != nullptr) {
-		processAnimCurveForPropertyField_internal(fbxAnimCurve, property, field, out_rigidAnimationData);
+		processAnimCurveForPropertyField_internal(fbxAnimCurve, animation_property, field, out_rigidAnimationData);
 	}
 }
 
-void processAnimCurvesForPropertyForNode(FbxNode* fbxNode, AnimationLayer* animationLayer, RigidAnimationProperty_t property, RigidAnimationData* out_rigidAnimationData) {
-	processAnimCurveForPropertyFieldForNode(fbxNode, animationLayer, property, PROPERTY_FIELD_X, out_rigidAnimationData);
-	processAnimCurveForPropertyFieldForNode(fbxNode, animationLayer, property, PROPERTY_FIELD_Y, out_rigidAnimationData);
-	processAnimCurveForPropertyFieldForNode(fbxNode, animationLayer, property, PROPERTY_FIELD_Z, out_rigidAnimationData);
+void processAnimCurvesForPropertyForNode(FbxNode* fbxNode, AnimationLayer* animationLayer, RigidAnimationProperty_t animation_property, RigidAnimationData* out_rigidAnimationData) {
+	processAnimCurveForPropertyFieldForNode(fbxNode, animationLayer, animation_property, PROPERTY_FIELD_X, out_rigidAnimationData);
+	processAnimCurveForPropertyFieldForNode(fbxNode, animationLayer, animation_property, PROPERTY_FIELD_Y, out_rigidAnimationData);
+	processAnimCurveForPropertyFieldForNode(fbxNode, animationLayer, animation_property, PROPERTY_FIELD_Z, out_rigidAnimationData);
 }
 
 void processAnimCurvesForNodeInAnimationLayer(FbxNode* fbxNode, AnimationLayer* animationLayer, RigidAnimationData* out_rigidAnimationData) {
@@ -81,22 +83,30 @@ void processAnimCurvesForNodeInAnimationLayer(FbxNode* fbxNode, AnimationLayer* 
 	processAnimCurvesForPropertyForNode(fbxNode, animationLayer, PROPERTY_SCALING, out_rigidAnimationData);
 }
 
-RigidAnimationData* processAnimCurvesForNodeInAllAnimationLayers(FbxNode* fbxNode, std::vector<AnimationLayer*>& animationLayers) {
-	RigidAnimationData* rigidAnimationData = new RigidAnimationData();
-	for (AnimationLayer* animationLayer : animationLayers) {
+std::vector<RigidAnimationData*>* processAnimCurvesForNodeInAllAnimationLayers(FbxNode* fbxNode, std::vector<AnimationLayer*>& animationLayers) {
+	std::vector<RigidAnimationData*>* rigidAnimationDatas = new std::vector<RigidAnimationData*>();
+	int layer_idx = 0;
+	for (auto animationLayer_it = animationLayers.begin(); animationLayer_it != animationLayers.end(); ++animationLayer_it) {
+		AnimationLayer* animationLayer = *animationLayer_it;
+
+		RigidAnimationData* rigidAnimationData = new RigidAnimationData();
+		char layer_idx_buffer[10];
+		sprintf(layer_idx_buffer, "%d", layer_idx);
+		rigidAnimationData->SetName(animationLayer->animationStackName + layer_idx_buffer);
 		processAnimCurvesForNodeInAnimationLayer(fbxNode, animationLayer, rigidAnimationData);
+
+		if (rigidAnimationData->GetNumKeyframes() > 1) {
+			printKeyFrames(rigidAnimationData);
+			rigidAnimationDatas->push_back(rigidAnimationData);
+		} else {
+			// Has only 1 keyframe in all. No need to consider it as an "animation"
+			delete rigidAnimationData;
+		}
+
+		++layer_idx;
 	}
 
-	if (rigidAnimationData->GetNumKeyframes() > 1) {
-		printKeyFrames(rigidAnimationData);
-		return rigidAnimationData;
-	} else {
-		// Has only 1 keyframe in all. No need to consider it as an "animation"
-		delete rigidAnimationData;
-		return nullptr;
-	}
-
-
+	return rigidAnimationDatas;
 }
 
 void printKeyFrames(RigidAnimationData* rigidAnimationData) {

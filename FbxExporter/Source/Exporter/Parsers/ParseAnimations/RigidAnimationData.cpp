@@ -17,24 +17,32 @@ void setFieldInPropertyVector(RigidAnimationPropertyField_t field, glm::vec3& pr
 	}
 }
 
-void RigidAnimationData::AddKeyframeForPropertyField(RigidAnimationProperty_t property, RigidAnimationPropertyField_t field,
+void RigidAnimationData::AddKeyframeForPropertyField(RigidAnimationProperty_t animation_property, RigidAnimationPropertyField_t field,
 													 float value, float time) {
 
 	RigidAnimationKeyframe* keyframe = this->getKeyframeAtTime(time);
 	VERIFY(keyframe != nullptr, "Got a valid keyframe");
 
-	switch (property) {
+	switch (animation_property) {
 	case PROPERTY_TRANSLATION:
 		setFieldInPropertyVector(field, keyframe->translation, value);
 		break;
 	case PROPERTY_ROTATION:
-		setFieldInPropertyVector(field, keyframe->translation, value);
+		setFieldInPropertyVector(field, keyframe->rotation, value);
 		break;
 	case PROPERTY_SCALING:
-		setFieldInPropertyVector(field, keyframe->translation, value);
+		setFieldInPropertyVector(field, keyframe->scaling, value);
 		break;
 	}
 
+}
+
+void RigidAnimationData::SetName(std::string newName) {
+	int whitespacePos = std::string::npos;
+	while ((whitespacePos = newName.find(' ')) != std::string::npos) {
+		newName.replace(whitespacePos, 1, "_");
+	}
+	this->name = newName;
 }
 
 RigidAnimationKeyframe* RigidAnimationData::GetKeyframeAtIndex(unsigned int index) {
