@@ -18,6 +18,9 @@
 #define ANIMATION_TYPE_STRING_RIGID "RIGID"
 #define CLIPNAME_STRING "CLIPNAME"
 
+#define TEXTURE_SHADER_NAME "smplshdr"
+#define COLOR_SHADER_NAME "clrshdr"
+
 // Forward Declarations:
 void WriteGlmVec3ToFile(glm::vec3 v, std::ofstream& file);
 void WriteGlmVec2ToFile(glm::vec2 v, std::ofstream& file);
@@ -83,7 +86,16 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 		// Write out texture info:
 
 		// TODO [Implement] Multiple textures
-		file << mesh->textureFileName;
+		file << mesh->textureFileName << "\n";
+	}
+
+	{
+		// Write out shader name:
+		if (mesh->textureFileName == "") {
+			file << COLOR_SHADER_NAME << "\n";
+		} else {
+			file << TEXTURE_SHADER_NAME << "\n";
+		}
 	}
 
 	printf("\nDone exporting mesh: %s", mesh->name.c_str());
