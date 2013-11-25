@@ -1,8 +1,7 @@
-bin
-bin/*
-deps
-obj
-Resources
+bin/
+deps/
+obj/
+Resources/
 *.exe
 *.ilk
 *.pdb
@@ -13,3 +12,4 @@ RemoteSystemsTempFiles
 *.swp
 *.swo
 *.user
+bin/executable

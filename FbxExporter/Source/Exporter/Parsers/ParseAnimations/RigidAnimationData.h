@@ -3,6 +3,7 @@
 
 #include "Libraries/glm/glm.hpp"
 
+#include <string>
 #include <vector>
 
 enum RigidAnimationProperty_t {

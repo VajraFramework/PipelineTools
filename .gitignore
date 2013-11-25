@@ -6,3 +6,7 @@ RemoteSystemsTempFiles
 *.swo
 *.user
 *.sdf
+bin/
+deps/
+obj/
+Export/

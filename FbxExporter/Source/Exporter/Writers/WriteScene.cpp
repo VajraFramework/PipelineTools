@@ -18,7 +18,7 @@
 #define ANIMATION_TYPE_STRING_RIGID "RIGID"
 #define CLIPNAME_STRING "CLIPNAME"
 
-#define TEXTURE_SHADER_NAME "smplshdr"
+#define TEXTURE_SHADER_NAME "txrshdr"
 #define COLOR_SHADER_NAME "clrshdr"
 
 // Forward Declarations:
@@ -62,7 +62,11 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 		//
 		WriteVectorOfVec3ToFile(positions, file);
 		WriteVectorOfVec3ToFile(normals, file);
-		WriteVectorOfVec2ToFile(texCoords, file);
+		if (mesh->textureFileName != "") {
+			WriteVectorOfVec2ToFile(texCoords, file);
+		} else {
+			file << "0" << "\n";
+		}
 	}
 
 	{
@@ -86,7 +90,12 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 		// Write out texture info:
 
 		// TODO [Implement] Multiple textures
-		file << mesh->textureFileName << "\n";
+		if (mesh->textureFileName != "") {
+			file << "yes" << "\n";
+			file << mesh->textureFileName << "\n";
+		} else {
+			file << "no" << "\n";
+		}
 	}
 
 	{

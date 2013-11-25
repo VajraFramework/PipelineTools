@@ -38,7 +38,7 @@ void RigidAnimationData::AddKeyframeForPropertyField(RigidAnimationProperty_t an
 }
 
 void RigidAnimationData::SetName(std::string newName) {
-	int whitespacePos = std::string::npos;
+	size_t whitespacePos = std::string::npos;
 	while ((whitespacePos = newName.find(' ')) != std::string::npos) {
 		newName.replace(whitespacePos, 1, "_");
 	}
