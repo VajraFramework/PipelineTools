@@ -19,6 +19,7 @@ bool vec2sEqual(glm::vec2 v1, glm::vec2 v2) {
 Mesh::Mesh() {
 	this->name = "";
 	this->vertices = new std::map<int, Vertex*>();
+	this->material = new Material();
 }
 
 Mesh::~Mesh() {

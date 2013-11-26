@@ -92,11 +92,36 @@ std::vector<std::string>* findAndGetTextureInfoByProperty(FbxProperty fbxTexture
 	return textureFileNames;
 }
 
-std::vector<std::string>* getTextureFileNames(FbxGeometry* fbxGeometry) {
-	std::vector<std::string>* textureFileNames = new std::vector<std::string>();
+void getMaterialData(FbxSurfaceMaterial* fbxMaterial, Material* out_material) {
+	FbxPropertyT<FbxDouble3> fbxDouble3;
+	if (fbxMaterial->GetClassId().Is(FbxSurfacePhong::ClassId)) {
+		fbxDouble3 = ((FbxSurfacePhong *) fbxMaterial)->Ambient;
+		out_material->ambientColor = glm::vec3(fbxDouble3.Get()[0], fbxDouble3.Get()[1], fbxDouble3.Get()[2]);
+		fbxDouble3 = ((FbxSurfacePhong *) fbxMaterial)->Diffuse;
+		out_material->diffuseColor = glm::vec3(fbxDouble3.Get()[0], fbxDouble3.Get()[1], fbxDouble3.Get()[2]);
+		fbxDouble3 = ((FbxSurfacePhong *) fbxMaterial)->Specular;
+		out_material->specularColor = glm::vec3(fbxDouble3.Get()[0], fbxDouble3.Get()[1], fbxDouble3.Get()[2]);
+	} else
+	if (fbxMaterial->GetClassId().Is(FbxSurfaceLambert::ClassId)) {
+		fbxDouble3 = ((FbxSurfaceLambert *) fbxMaterial)->Ambient;
+		out_material->ambientColor = glm::vec3(fbxDouble3.Get()[0], fbxDouble3.Get()[1], fbxDouble3.Get()[2]);
+		fbxDouble3 = ((FbxSurfaceLambert *) fbxMaterial)->Diffuse;
+		out_material->diffuseColor = glm::vec3(fbxDouble3.Get()[0], fbxDouble3.Get()[1], fbxDouble3.Get()[2]);
+		out_material->specularColor = glm::vec3(0.5f, 0.5f, 0.5f);
+	} else {
+		// Unknown material type:
+		printf("\nWARNING: Unknown material type");
+		out_material->ambientColor = glm::vec3(0.3f, 0.3f, 0.3f);
+		out_material->diffuseColor = glm::vec3(0.7f, 0.7f, 0.7f);
+		out_material->specularColor = glm::vec3(0.5f, 0.5f, 0.5f);
+	}
+}
+
+void getMaterialAndTextureFileNames(FbxGeometry* fbxGeometry, std::vector<std::string>* out_textureFileNames,
+																		Material* out_material) {
 
 	if (fbxGeometry->GetNode() == nullptr) {
-		return textureFileNames;
+		return;
 	}
 
 	int numMaterials = fbxGeometry->GetNode()->GetSrcObjectCount(FbxSurfaceMaterial::ClassId);
@@ -104,15 +129,17 @@ std::vector<std::string>* getTextureFileNames(FbxGeometry* fbxGeometry) {
 
 		FbxSurfaceMaterial *fbxMaterial = (FbxSurfaceMaterial *)fbxGeometry->GetNode()->GetSrcObject(FbxSurfaceMaterial::ClassId, midx);
 
-		// Go through all the possible textures
 		if (fbxMaterial) {
 
+			getMaterialData(fbxMaterial, out_material);
+
+			// Go through all the possible textures
 			int tidx;
 			FBXSDK_FOR_EACH_TEXTURE(tidx) {
 				FbxProperty fbxTextureProperty = fbxMaterial->FindProperty(FbxLayerElement::sTextureChannelNames[tidx]);
 				std::vector<std::string>* tempTextureFileNames = findAndGetTextureInfoByProperty(fbxTextureProperty, midx);
 				for (int t = 0; t < tempTextureFileNames->size(); ++t) {
-					textureFileNames->push_back(tempTextureFileNames->at(t));
+					out_textureFileNames->push_back(tempTextureFileNames->at(t));
 				}
 			}
 
@@ -120,7 +147,7 @@ std::vector<std::string>* getTextureFileNames(FbxGeometry* fbxGeometry) {
 
 	}// end for materialIndex
 
-	return textureFileNames;
+	return;
 }
 
 int InsertVertexFromPolygonIntoMeshAndReturnIndex(FbxMesh* fbxMesh, int pidx, int vertexIndexInPolygon, bool hasTextures, const char* uvSetName, Mesh* mesh) {
@@ -198,7 +225,8 @@ Mesh* ParseFbxMesh(FbxMesh* fbxMesh) {
     	}
     }
 
-    std::vector<std::string>* textureFileNames = getTextureFileNames(fbxMesh);
+	std::vector<std::string>* textureFileNames = new std::vector<std::string>();
+    getMaterialAndTextureFileNames(fbxMesh, textureFileNames, mesh->material);
     if (textureFileNames->size() > 0) {
     	printf("\nNumber of texture file names: %lu", textureFileNames->size());
     	// TODO [Implement] Support multiple texture files:

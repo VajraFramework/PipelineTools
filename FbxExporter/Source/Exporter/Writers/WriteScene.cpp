@@ -87,6 +87,13 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 	}
 
 	{
+		// Write out material data:
+		WriteGlmVec3ToFile(mesh->material->ambientColor, file);    file << "\n";
+		WriteGlmVec3ToFile(mesh->material->diffuseColor, file);    file << "\n";
+		WriteGlmVec3ToFile(mesh->material->specularColor, file);    file << "\n";
+	}
+
+	{
 		// Write out texture info:
 
 		// TODO [Implement] Multiple textures
