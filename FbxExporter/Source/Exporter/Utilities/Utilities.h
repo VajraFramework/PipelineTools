@@ -44,10 +44,14 @@ void ASSERT_LOG_internal(const char* file, int lineNumber, const char* functionN
 glm::vec2 ConvertFbxVector2ToGlmVec2(FbxVector2 fv);
 glm::vec3 ConvertFbxVector4ToGlmVec3(FbxVector4 fv);
 glm::vec4 ConvertFbxVector4ToGlmVec4(FbxVector4 fv);
+//
+glm::mat4x4 ConvertFbxMatrixToGlmMat4x4(FbxMatrix fm);
 
 void printGlmVec2(glm::vec2 v);
 void printGlmVec3(glm::vec3 v);
 void printGlmVec4(glm::vec4 v);
+//
+void printGlmMat4x4(glm::mat4x4 m);
 
 void PrintVectorOfVec3(std::vector<glm::vec3>* vectorOfVec3, std::string printAs);
 void PrintVectorOfVec2(std::vector<glm::vec2>* vectorOfVec2, std::string printAs);
@@ -55,5 +59,12 @@ void PrintVectorOfVec2(std::vector<glm::vec2>* vectorOfVec2, std::string printAs
 // Forward Declaration:
 class Mesh;
 void PrintMesh(Mesh* mesh);
+
+void WriteGlmVec3ToFile(glm::vec3 v, std::ofstream& file);
+void WriteGlmVec2ToFile(glm::vec2 v, std::ofstream& file);
+void WriteVectorOfVec3ToFile(std::vector<glm::vec3>* vectorOfVec3, std::ofstream& file);
+void WriteVectorOfVec2ToFile(std::vector<glm::vec2>* vectorOfVec2, std::ofstream& file);
+//
+void WriteGlmMat4x4ToFile(glm::mat4x4 m, std::ofstream& file);
 
 #endif // UTILITIES_H

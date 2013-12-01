@@ -1,0 +1,43 @@
+Autodesk FBX SDK version 2014.2 Release (222578)
+File exists and is readable
+FBX file format version for this FBX SDK is 7.4.0
+FBX file format version for file 'Resources/Import/bone.fbx' is 7.4.0
+
+Animation Stack Information
+    Number of Animation Stacks: 1
+    Current Animation Stack: "Take 001"
+
+    Animation Stack 0
+         Name: "Take 001"
+         Description: ""
+         Import Name: "Take 001"
+         Import State: true
+
+
+Parsing scene for animations
+Number of animation stacks found: 1
+Animation Stack name: Take 001
+Number of animation layers found: 1
+Done parsing rigid animations
+
+Current node: RootNode
+Current node: pCone1
+Mesh: pCone1
+Number of vertices: 406
+Exporting scene Resources/Import/bone.fbx, to path Resources/Export/Models/
+Number of models in scene: 2
+Exporting model: RootNode
+Done exporting model: RootNode
+
+Exporting animclips for model: RootNode
+Exporting model: pCone1
+Exporting mesh: pCone1
+Number of positions: 406
+Number of normals: 406
+Number of texCoords: 406
+Number of faces: 640
+Done exporting mesh: pCone1
+Done exporting model: pCone1
+
+Exporting animclips for model: pCone1
+Program Success!

@@ -15,6 +15,7 @@ public:
 	Model();
 	~Model();
 
+	void SetName(std::string name);
 	std::string name;
 
 	Mesh* mesh;

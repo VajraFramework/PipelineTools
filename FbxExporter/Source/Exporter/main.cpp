@@ -18,7 +18,8 @@
 
 #include <iostream>
 
-// #define SAMPLE_FILENAME "Resources/Import/Assassin.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/assassin.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/baserig.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/flyer.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/monkey.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/TexturedCube.fbx"
@@ -27,7 +28,9 @@
 // #define SAMPLE_FILENAME "Resources/Import/pyramid.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/twoplanes.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/SimpleCube.fbx"
-#define SAMPLE_FILENAME "Resources/Import/stubbyarrows.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/stubbyarrows.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/wavybox.fbx"
+#define SAMPLE_FILENAME "Resources/Import/bone.fbx"
 
 #define EXPORT_PATH "Resources/Export/Models/"
 

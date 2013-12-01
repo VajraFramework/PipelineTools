@@ -79,9 +79,12 @@
     <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\RigidAnimationData.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ParseBones\Definitions.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ParseBones\ParseBones.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseMeshHelper.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseScene.cpp" />
     <ClCompile Include="Source\Exporter\Utilities\Utilities.cpp" />
+    <ClCompile Include="Source\Exporter\Writers\WriteArmature.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +101,12 @@
     <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\RigidAnimationData.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseBones\Definitions.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ParseBones\ParseBones.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseMeshHelper.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseScene.h" />
     <ClInclude Include="Source\Exporter\Utilities\Utilities.h" />
+    <ClInclude Include="Source\Exporter\Writers\WriteArmature.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

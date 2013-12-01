@@ -6,26 +6,13 @@
 #include "Exporter/Definitions/Polylist.h"
 #include "Exporter/Definitions/Scene.h"
 #include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
+#include "Exporter/Parsers/ParseBones/Definitions.h"
 #include "Exporter/Utilities/Utilities.h"
 #include "Exporter/Writers/WriteScene.h"
+#include "Exporter/Writers/WriteArmature.h"
 
 #include <fstream>
 #include <vector>
-
-#define MODEL_FILE_EXTENSION ".model"
-#define ANIMCLIPS_FILE_EXTENSION ".animclips"
-
-#define ANIMATION_TYPE_STRING_RIGID "RIGID"
-#define CLIPNAME_STRING "CLIPNAME"
-
-#define TEXTURE_SHADER_NAME "txrshdr"
-#define COLOR_SHADER_NAME "clrshdr"
-
-// Forward Declarations:
-void WriteGlmVec3ToFile(glm::vec3 v, std::ofstream& file);
-void WriteGlmVec2ToFile(glm::vec2 v, std::ofstream& file);
-void WriteVectorOfVec3ToFile(std::vector<glm::vec3>* vectorOfVec3, std::ofstream& file);
-void WriteVectorOfVec2ToFile(std::vector<glm::vec2>* vectorOfVec2, std::ofstream& file);
 
 void exportMesh(Mesh* mesh, std::ofstream& file) {
 	if (mesh == nullptr) {
@@ -100,6 +87,16 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 		if (mesh->textureFileName != "") {
 			file << "yes" << "\n";
 			file << mesh->textureFileName << "\n";
+		} else {
+			file << "no" << "\n";
+		}
+	}
+
+	{
+		// Write out armature name:
+		if (mesh->armature != nullptr) {
+			file << "yes" << "\n";
+			file << mesh->armature->name << ARMATURE_FILE_EXTENSION << "\n";
 		} else {
 			file << "no" << "\n";
 		}
@@ -186,6 +183,7 @@ void exportScene(Scene* scene, std::string basePath) {
 
 		Model* model = scene->models->at(i);
 
+
 		// Open new model file for writing:
 		std::string modelFilePath = basePath + model->name + MODEL_FILE_EXTENSION;
 		std::ofstream modelFile(modelFilePath, std::ios_base::out);
@@ -196,6 +194,7 @@ void exportScene(Scene* scene, std::string basePath) {
 		//
 		modelFile.close();
 
+
 		// Open a new animclips file for writing:
 		std::string animclipsFilePath = basePath + model->name + ANIMCLIPS_FILE_EXTENSION;
 		std::ofstream animclipsFile(animclipsFilePath, std::ios_base::out);
@@ -205,6 +204,19 @@ void exportScene(Scene* scene, std::string basePath) {
 		exportRigidAnimations(model, animclipsFile);
 		//
 		animclipsFile.close();
+
+
+		// Open a new armature file for writing:
+		if (model->mesh != nullptr && model->mesh->armature != nullptr) {
+			std::string armatureFilePath = basePath + model->mesh->armature->name + ARMATURE_FILE_EXTENSION;
+			std::ofstream armatureFile(armatureFilePath, std::ios_base::out);
+			//
+			armatureFile << ARMATURE_FORMAT_VERSION_NUMBER  << "\n";
+			//
+			exportArmature(model->mesh->armature, armatureFile);
+			//
+			armatureFile.close();
+		}
 	}
 
 }
@@ -217,28 +229,4 @@ void ExportSceneToModelFiles(Scene* scene, std::string basePath) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void WriteGlmVec3ToFile(glm::vec3 v, std::ofstream& file) {
-	file << v.x << " " << v.y << " " << v.z;
-}
 
-void WriteGlmVec2ToFile(glm::vec2 v, std::ofstream& file) {
-	file << v.x << " " << v.y;
-}
-
-void WriteVectorOfVec3ToFile(std::vector<glm::vec3>* vectorOfVec3, std::ofstream& file) {
-	file << vectorOfVec3->size() << "\n";
-	for (int i = 0; i < vectorOfVec3->size(); ++i) {
-		WriteGlmVec3ToFile(vectorOfVec3->at(i), file);
-		file << "\n";
-	}
-	file << "\n";
-}
-
-void WriteVectorOfVec2ToFile(std::vector<glm::vec2>* vectorOfVec2, std::ofstream& file) {
-	file << vectorOfVec2->size() << "\n";
-	for (int i = 0; i < vectorOfVec2->size(); ++i) {
-		WriteGlmVec2ToFile(vectorOfVec2->at(i), file);
-		file << "\n";
-	}
-	file << "\n";
-}

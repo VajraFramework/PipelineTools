@@ -1,4 +1,5 @@
 #include "Exporter/Definitions/Mesh.h"
+#include "Exporter/Parsers/ParseBones/Definitions.h"
 #include "Exporter/Utilities/Utilities.h"
 
 // TODO [Cleanup] Move this somewhere else
@@ -20,12 +21,16 @@ Mesh::Mesh() {
 	this->name = "";
 	this->vertices = new std::map<int, Vertex*>();
 	this->material = new Material();
+	this->armature = nullptr;
 }
 
 Mesh::~Mesh() {
 	if (this->vertices != nullptr) {
 		this->vertices->clear();
 		delete this->vertices;
+	}
+	if (this->armature != nullptr) {
+		delete this->armature;
 	}
 }
 

@@ -20,3 +20,14 @@ Model::~Model() {
 		this->rigidAnimationDatas->clear();
 	}
 }
+
+void Model::SetName(std::string name) {
+	this->name = name;
+
+	// Clean it up a little:
+	size_t colonPos = this->name.find(":");
+	while (colonPos != std::string::npos) {
+		this->name.replace(colonPos, 1, "_");
+		colonPos = this->name.find(":");
+	}
+}

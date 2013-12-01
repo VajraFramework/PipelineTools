@@ -8,6 +8,7 @@
 #include "Exporter/Definitions/Vertex.h"
 #include "Exporter/Parsers/ParseAnimations/ParseAnimation.h"
 #include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
+#include "Exporter/Parsers/ParseBones/ParseBones.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Parsers/ParseMeshHelper.h"
 #include "Exporter/Utilities/Utilities.h"
@@ -45,6 +46,7 @@ Scene* ParseScene(FbxManager*& fbxManager, std::string fbxFileName) {
 
 		// Look for Animation Layers:
 		LoadAnimationLayers(fbxScene);
+
 
 		scene = new Scene();
 		scene->name = fbxFileName;
@@ -85,11 +87,15 @@ void ParseNode(FbxNode* node, Scene* outScene) {
 		outScene->models->push_back(model);
 	}
 
+	if (node->GetMesh() != nullptr) {
+		Armature* armature = ParseSkinClusters(node->GetMesh());
+		model->mesh->armature = armature;
+	}
 }
 
 Model* GetModel(FbxNode* node) {
 	Model* model = new Model();
-	model->name = node->GetName();
+	model->SetName(node->GetName());
 
 	FbxVector4 initialPositionFbxVec4 = node->EvaluateLocalTranslation();
 	model->initialPosition = ConvertFbxVector4ToGlmVec3(initialPositionFbxVec4);

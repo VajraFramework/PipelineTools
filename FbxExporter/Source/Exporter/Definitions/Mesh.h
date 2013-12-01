@@ -11,6 +11,7 @@
 #include <vector>
 
 // Forward Declarations:
+class Armature;
 class Material;
 
 class Mesh {
@@ -29,6 +30,8 @@ public:
 	// TODO [Implement] Move this inside the material inside each polylist
 	std::string textureFileName;
 	Material* material;
+
+	Armature* armature;
 
 private:
 };
