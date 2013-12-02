@@ -7,6 +7,11 @@
 #include <string>
 #include <vector>
 
+struct BoneInfluence {
+	int controlPointIdx;
+	double weight;
+};
+
 class Bone {
 public:
 	Bone();
@@ -24,6 +29,8 @@ public:
 	std::vector<std::string> childrenNames;
 
 	glm::mat4x4 bindPoseMatrix;
+
+	std::vector<BoneInfluence*> influences;
 
 private:
 };

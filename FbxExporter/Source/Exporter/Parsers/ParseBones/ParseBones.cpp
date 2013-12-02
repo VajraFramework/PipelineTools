@@ -1,113 +1,36 @@
 #include "Exporter/Parsers/ParseBones/ParseBones.h"
 #include "Exporter/Utilities/Utilities.h"
 
-#if 0
-
-FbxPose* findBindPose(FbxScene* fbxScene) {
-	int numPoses = fbxScene->GetPoseCount();
-	printf("\nNumber of poses: %d", numPoses);
-
-	int poseIdx = 0;
-	for (; poseIdx < numPoses; ++poseIdx) {
-		FbxPose* pose = fbxScene->GetPose(poseIdx);
-		if (pose->IsBindPose()) {
-			return fbxScene->GetPose(poseIdx);
-		}
+std::string cleanUpName(std::string name) {
+	size_t colonPos = name.find(":");
+	while (colonPos != std::string::npos) {
+		name = name.replace(colonPos, 1, "_");
+		colonPos = name.find(":");
 	}
-
-	return nullptr;
+	return name;
 }
-
-int numBonesInBindPose(FbxPose* fbxPose) {
-	int numBones = 0;
-
-	int numItemsInPose = fbxPose->GetCount();
-	for (int poseItemIdx = 0; poseItemIdx < numItemsInPose; ++poseItemIdx) {
-		FbxNode* fbxNodeInPose = fbxPose->GetNode(poseItemIdx);
-		if (fbxNodeInPose->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton) {
-			numBones++;
-		}
-	}
-
-	return numBones;
-}
-
-Armature* processBonesInBindPose(FbxPose* fbxPose) {
-	int numItemsInPose = fbxPose->GetCount();
-	printf("\nNumber of items in pose: %d\n", numItemsInPose);
-
-	if (numBonesInBindPose(fbxPose) == 0) {
-		return nullptr;
-	}
-
-	Armature* armature = new Armature();
-
-	for (int poseItemIdx = 0; poseItemIdx < numItemsInPose; ++poseItemIdx) {
-		FbxNode* fbxNodeInPose = fbxPose->GetNode(poseItemIdx);
-		if (fbxNodeInPose->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton) {
-			FbxNode* boneNode = fbxNodeInPose;
-			Bone* bone = new Bone();
-
-			bone->name = boneNode->GetName();
-			printf("\nFound bone : %s", bone->name.c_str());
-			//
-			printf("\nBind pose matrix for: %s", fbxPose->GetNode(poseItemIdx)->GetName());
-			//
-			ASSERT(fbxPose->IsLocalMatrix(poseItemIdx), "Is local matrix (non-local matrices in bind pose are not yet supported)");
-			printf("\nIs local space? %s\n", fbxPose->IsLocalMatrix(poseItemIdx) ? "true" : "false");
-			//
-			FbxMatrix fbxMatrix = fbxPose->GetMatrix(poseItemIdx);
-			bone->bindPoseMatrix = ConvertFbxMatrixToGlmMat4x4(fbxMatrix);
-			printGlmMat4x4(bone->bindPoseMatrix);
-			//
-			FbxSkeleton* fbxSkeleton = (FbxSkeleton*) boneNode->GetNodeAttribute();
-			switch(fbxSkeleton->GetSkeletonType()) {
-			case FbxSkeleton::eLimb: printf("Skeleton node type: limb"); break;
-			case FbxSkeleton::eLimbNode: printf("Skeleton node type: limb node"); break;
-			case FbxSkeleton::eRoot: printf("Skeleton node type: root"); break;
-			case FbxSkeleton::eEffector: printf("Skeleton node type: effector"); break;
-			default: printf("Skeleton node type: other"); break;
-			}
-			//
-			printf("\nIs root bone?: %s", fbxSkeleton->IsSkeletonRoot() ? "true" : "false");
-			//
-			printf("\nNumber of children: %d", boneNode->GetChildCount());
-			//
-			printf("\n");
-		}
-	}
-
-	return armature;
-}
-
-
-Armature* processBindPose(FbxPose* fbxPose) {
-
-	return processBonesInBindPose(fbxPose);
-}
-
-Armature* ParseBones(FbxScene* fbxScene) {
-	FbxPose* bindPose = findBindPose(fbxScene);
-
-	if (bindPose == nullptr) {
-		printf("\nNo bind pose found");
-		return nullptr;
-	}
-
-	printf("\nBind pose found: %s", bindPose->GetName());
-
-	Armature* armature = processBindPose(bindPose);
-
-	return armature;
-}
-
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
 bool isNodeABone(FbxNode* fbxNode) {
 	return (fbxNode->GetNodeAttribute() != nullptr &&
 			fbxNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton);
+}
+
+void processWeights(Bone* bone, FbxCluster* fbxCluster) {
+	int numIndices = fbxCluster->GetControlPointIndicesCount();
+	int* indices = fbxCluster->GetControlPointIndices();
+	double* weights = fbxCluster->GetControlPointWeights();
+
+	printf("\nFound %d bone weight influences", numIndices);
+
+	for (int idx = 0; idx < numIndices; ++idx) {
+		BoneInfluence* influence = new BoneInfluence();
+		influence->controlPointIdx = indices[idx];
+		influence->weight = weights[idx];
+		//
+		bone->influences.push_back(influence);
+	}
 }
 
 void processBoneNode(Armature* armature, Bone* bone, FbxCluster* fbxCluster) {
@@ -123,11 +46,11 @@ void processBoneNode(Armature* armature, Bone* bone, FbxCluster* fbxCluster) {
 
 	// Set bone's name:
 	bone->SetName(boneNode->GetName());
-	printf("\nProcessing bone: %s", bone->name.c_str());
+	printf("\n\nProcessing bone: %s", bone->name.c_str());
 
 	// Set bone's parent:
 	if (isNodeABone(boneNode->GetParent())) {
-		bone->SetParent(boneNode->GetParent()->GetName());
+		bone->SetParent(cleanUpName(boneNode->GetParent()->GetName()));
 		printf("\nParent bone: %s", bone->parentName.c_str());
 	}
 
@@ -137,8 +60,8 @@ void processBoneNode(Armature* armature, Bone* bone, FbxCluster* fbxCluster) {
 	for (int childIdx = 0; childIdx < numChildren; ++childIdx) {
 		FbxNode* childBoneNode = boneNode->GetChild(childIdx);
 		if (isNodeABone(childBoneNode)) {
-			bone->AddChild(childBoneNode->GetName());
-			printf("\n\t%s", childBoneNode->GetName());
+			bone->AddChild(cleanUpName(childBoneNode->GetName()));
+			printf("\n\t%s", cleanUpName(childBoneNode->GetName()).c_str());
 		}
 	}
 
@@ -156,6 +79,11 @@ void processBoneNode(Armature* armature, Bone* bone, FbxCluster* fbxCluster) {
 		printf("\n");
 		//
 		bone->bindPoseMatrix = m;
+	}
+
+	{
+		// Process weights:
+		processWeights(bone, fbxCluster);
 	}
 
 	armature->AddBone(bone);
@@ -200,4 +128,19 @@ Armature* ParseSkinClusters(FbxGeometry* fbxGeometry) {
 
 	// TODO [Implement] Add support for multiple skin deformers acting on the same mesh:
 	return processSkinDeformer(fbxGeometry->GetDeformer(0, FbxDeformer::eSkin), fbxGeometry);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void AddBoneWeightsToMesh(Armature* armature, Mesh* mesh) {
+	for (auto bone_it = armature->bones.begin(); bone_it != armature->bones.end(); ++bone_it) {
+		Bone* bone = bone_it->second;
+
+		for (auto influence_it = bone->influences.begin(); influence_it != bone->influences.end(); ++influence_it) {
+			BoneInfluence* influence = *influence_it;
+
+			mesh->AddBoneWeightInfluenceToVertexAtIndex(influence->controlPointIdx, bone->idx, influence->weight);
+		}
+	}
+
 }

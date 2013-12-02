@@ -24,6 +24,7 @@ public:
 	// Returns new vertex index which may or may not be the same as the one provided
 	int AddNewVertexAtIndex(Vertex* newVertex, int suggestedVertexIndex);
 	std::map<int /* vertex index */, Vertex*>* vertices;
+	void AddBoneWeightInfluenceToVertexAtIndex(int vertexIndex, int boneIndex, double weight);
 
 	std::vector<Polylist*>* polylists;
 

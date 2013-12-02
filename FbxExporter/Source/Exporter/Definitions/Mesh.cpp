@@ -84,3 +84,16 @@ int Mesh::AddNewVertexAtIndex(Vertex* newVertex, int suggestedVertexIndex) {
 	VERIFY(0, "\nUnreachable code");
 	return -1;
 }
+
+void Mesh::AddBoneWeightInfluenceToVertexAtIndex(int vertexIndex, int boneIndex, double weight) {
+	ASSERT(this->vertices->at(vertexIndex) != this->vertices.end(), "Vertex found");
+	Vertex* nextVertex = this->vertices->at(vertexIndex);
+	while (nextVertex != nullptr) {
+		nextVertex->AddBoneWeightInfluence(boneIndex, weight);
+		if (nextVertex->dup_vertex_index == -1) {
+			nextVertex = nullptr;
+		} else {
+			nextVertex = this->vertices->at(nextVertex->dup_vertex_index);
+		}
+	}
+}

@@ -28,7 +28,7 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 	file << mesh->name << "\n";
 
 	{
-		// Write out positions, normals, and texCoords
+		// Write out positions, normals, texCoords, and bone weight influences
 		std::vector<glm::vec3>* positions = new std::vector<glm::vec3>();
 		std::vector<glm::vec3>* normals = new std::vector<glm::vec3>();
 		std::vector<glm::vec2>* texCoords = new std::vector<glm::vec2>();
@@ -54,7 +54,22 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 		} else {
 			file << "0" << "\n";
 		}
+
+		// Write out bone weight influences:
+		if (mesh->armature != nullptr) {
+			file << numVertices << "\n";
+			for (int vidx = 0; vidx < numVertices; ++vidx) {
+				Vertex* vertex = mesh->vertices->at(vidx);
+				for (unsigned int i = 0; i < vertex->influences.size(); ++i) {
+					file << vertex->influences[i]->boneIdx << " " << vertex->influences[i]->weight << " ";
+				}
+				file << "\n";
+			}
+		} else {
+			file << "0" << "\n";
+		}
 	}
+	
 
 	{
 		// Write out faces:
@@ -105,7 +120,11 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 	{
 		// Write out shader name:
 		if (mesh->textureFileName == "") {
-			file << COLOR_SHADER_NAME << "\n";
+			if (mesh->armature != nullptr) {
+				file << BONE_COLOR_SHADER_NAME << "\n";
+			} else {
+				file << COLOR_SHADER_NAME << "\n";
+			}
 		} else {
 			file << TEXTURE_SHADER_NAME << "\n";
 		}

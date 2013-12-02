@@ -90,6 +90,10 @@ void ParseNode(FbxNode* node, Scene* outScene) {
 	if (node->GetMesh() != nullptr) {
 		Armature* armature = ParseSkinClusters(node->GetMesh());
 		model->mesh->armature = armature;
+		//
+		if (model->mesh->armature != nullptr) {
+			AddBoneWeightsToMesh(armature, model->mesh);
+		}
 	}
 }
 
