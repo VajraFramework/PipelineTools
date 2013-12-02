@@ -10,6 +10,7 @@ void exportBone(Bone* bone, std::ofstream& file) {
 	}
 
 	file << bone->name << "\n";
+	file << bone->idx  << "\n";
 
 	if (bone->parentName == "") {
 		file << "NULL" << "\n";

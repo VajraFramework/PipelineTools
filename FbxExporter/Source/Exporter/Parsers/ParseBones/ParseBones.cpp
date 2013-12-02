@@ -109,6 +109,7 @@ Armature* processSkinDeformer(FbxDeformer* fbxDeformer, FbxGeometry* affectedGeo
 		ASSERT(fbxCluster->GetLink() != nullptr, "Link not null");
 
 		Bone* bone = new Bone();
+		bone->idx = clusterIdx;
 
 		processBoneNode(armature, bone, fbxCluster);
 	}

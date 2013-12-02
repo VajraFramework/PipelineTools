@@ -38,9 +38,6 @@ void Armature::SetName(std::string name) {
 void Armature::AddBone(Bone* bone) {
 	ASSERT(this->bones.find(bone->name) == this->bones.end(), "Not duplicate bone being added (name = %s)", bone->name.c_str());
 
-	int newBoneIdx = this->bones.size();
-	bone->idx = newBoneIdx;
-
 	this->bones[bone->name] = bone;
 }
 
