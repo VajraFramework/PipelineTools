@@ -126,7 +126,11 @@ void exportMesh(Mesh* mesh, std::ofstream& file) {
 				file << COLOR_SHADER_NAME << "\n";
 			}
 		} else {
-			file << TEXTURE_SHADER_NAME << "\n";
+			if (mesh->armature != nullptr) {
+				file << BONE_TEXTURE_SHADER_NAME << "\n";
+			} else {
+				file << TEXTURE_SHADER_NAME << "\n";
+			}
 		}
 	}
 

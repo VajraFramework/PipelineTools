@@ -13,6 +13,7 @@
 #define TEXTURE_SHADER_NAME "txrshdr"
 #define COLOR_SHADER_NAME "clrshdr"
 #define BONE_COLOR_SHADER_NAME "bncshdr"
+#define BONE_TEXTURE_SHADER_NAME "bntshdr"
 
 // Forward Declarations:
 class Scene;
