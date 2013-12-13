@@ -86,7 +86,7 @@ int Mesh::AddNewVertexAtIndex(Vertex* newVertex, int suggestedVertexIndex) {
 }
 
 void Mesh::AddBoneWeightInfluenceToVertexAtIndex(int vertexIndex, int boneIndex, double weight) {
-	ASSERT(this->vertices->at(vertexIndex) != this->vertices.end(), "Vertex found");
+	ASSERT(this->vertices->at(vertexIndex) != nullptr, "Vertex found");
 	Vertex* nextVertex = this->vertices->at(vertexIndex);
 	while (nextVertex != nullptr) {
 		nextVertex->AddBoneWeightInfluence(boneIndex, weight);

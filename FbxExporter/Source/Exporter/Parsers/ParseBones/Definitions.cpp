@@ -18,7 +18,9 @@ void Bone::SetName(std::string name) {
 }
 
 void Bone::AddChild(std::string childBoneName) {
-	ASSERT(this->childrenNames.find(childBoneName) == this->childrenNames.end(), "Not duplicate child bone being added (name = %s)", childBoneName.c_str());
+	for (std::string eachChildBoneName : this->childrenNames) {
+		ASSERT(eachChildBoneName != childBoneName, "Not duplicate child bone being added (name = %s)", childBoneName.c_str());
+	}
 	this->childrenNames.push_back(childBoneName);
 }
 
@@ -42,7 +44,7 @@ void Armature::AddBone(Bone* bone) {
 }
 
 Bone* Armature::GetBoneByName(std::string boneName) {
-	ASSERT(this->bones.find(bone->name) != this->bones.end(), "Bone found (name = %s)", boneName.c_str());
+	ASSERT(this->bones.find(boneName) != this->bones.end(), "Bone found (name = %s)", boneName.c_str());
 	return this->bones[boneName];
 }
 

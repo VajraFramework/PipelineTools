@@ -48,8 +48,8 @@ DEPS += $(addprefix $(DEPSDIR)/,\
 
 TARGET      = $(BINDIR)/$(EXECUTABLE)
 
-CC          = gcc
-LD          = gcc
+CC          = g++
+LD          = g++
 
 CXXFLAGS    = $(M64) $(GCC_DEBUG_FLAGS)
 LDFLAGS     = $(M64) $(GCC_LINK_FLAGS)
