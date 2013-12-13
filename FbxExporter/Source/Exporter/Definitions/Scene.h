@@ -14,6 +14,8 @@ public:
 	std::string name;
 	std::vector<Model*>* models;
 
+	Model* GetModelByModelName(std::string name);
+
 private:
 };
 

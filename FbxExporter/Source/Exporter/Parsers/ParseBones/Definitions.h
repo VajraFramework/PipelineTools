@@ -1,11 +1,15 @@
 #ifndef PARSE_BONES_DEFINITIONS_H
 #define PARSE_BONES_DEFINITIONS_H
 
+
 #include "Libraries/glm/glm.hpp"
 
 #include <map>
 #include <string>
 #include <vector>
+
+// Forward Declarations:
+class SkeletalAnimationData;
 
 struct BoneInfluence {
 	int controlPointIdx;
@@ -37,6 +41,8 @@ private:
 
 class Armature {
 public:
+	Armature();
+	~Armature();
 
 	void SetName(std::string name);
 	std::string name;
@@ -50,6 +56,8 @@ public:
 
 	std::map<std::string /* bone name */, Bone*> bones;
 	std::string rootBoneName;
+
+	SkeletalAnimationData* skeletalAnimationData;
 
 private:
 };

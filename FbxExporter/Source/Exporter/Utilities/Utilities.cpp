@@ -209,3 +209,12 @@ void WriteGlmMat4x4ToFile(glm::mat4x4 m, std::ofstream& file) {
 	}
 	file << "\n";
 }
+
+bool areFloatsApproximatelyEqual(float a, float b, float tolerancePercentage) {
+	float tolerance = abs(std::max(std::max(a, b), 0.1f) * (tolerancePercentage / 100.0f));
+
+	if (a >= (b - tolerance)  &&  a <= (b + tolerance)) {
+		return true;
+	}
+	return false;
+}

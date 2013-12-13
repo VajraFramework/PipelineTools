@@ -10,3 +10,13 @@ Scene::~Scene() {
 		delete this->models;
 	}
 }
+
+Model* Scene::GetModelByModelName(std::string name) {
+	for (auto it = this->models->begin(); it != this->models->end(); ++it) {
+		Model* model = *it;
+		if (model->name == name) {
+			return model;
+		}
+	}
+	return nullptr;
+}

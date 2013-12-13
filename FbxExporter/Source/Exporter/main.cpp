@@ -29,9 +29,9 @@
 // #define SAMPLE_FILENAME "Resources/Import/twoplanes.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/SimpleCube.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/stubbyarrows.fbx"
-#define SAMPLE_FILENAME "Resources/Import/wavybox.fbx"
+// #define SAMPLE_FILENAME "Resources/Import/wavybox.fbx"
 // #define SAMPLE_FILENAME "Resources/Import/bone.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/thief.fbx"
+#define SAMPLE_FILENAME "Resources/Import/thief.fbx"
 
 #define EXPORT_PATH "Resources/Export/Models/"
 

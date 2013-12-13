@@ -52,16 +52,6 @@ RigidAnimationKeyframe* RigidAnimationData::GetKeyframeAtIndex(unsigned int inde
 	return nullptr;
 }
 
-#define DEFAULT_TOLERANCE_PERCENTAGE 0.2f // 0.2%
-bool areFloatsApproximatelyEqual(float a, float b, float tolerancePercentage = DEFAULT_TOLERANCE_PERCENTAGE) {
-	float tolerance = abs(std::max(std::max(a, b), 0.1f) * (tolerancePercentage / 100.0f));
-
-	if (a >= (b - tolerance)  &&  a <= (b + tolerance)) {
-		return true;
-	}
-	return false;
-}
-
 RigidAnimationKeyframe* RigidAnimationData::getKeyframeAtTime(float time) {
 	// Look for existing keyframes at that time:
 	for (int i = 0; i < this->keyframes.size(); ++i) {

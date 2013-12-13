@@ -68,6 +68,12 @@
     <ClCompile Include="Source\Exporter\Writers\WriteArmature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Exporter\Definitions\SkeletalAnimationData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Exporter\Common\Common.h">
@@ -118,5 +124,7 @@
     <ClInclude Include="Source\Exporter\Parsers\ParseBones\ParseBones.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseBones\Definitions.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteArmature.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.h" />
+    <ClInclude Include="Source\Exporter\Definitions\SkeletalAnimationData.h" />
   </ItemGroup>
 </Project>

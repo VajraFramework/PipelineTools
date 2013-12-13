@@ -1,3 +1,4 @@
+#include "Exporter/Definitions/SkeletalAnimationData.h"
 #include "Exporter/Parsers/ParseBones/Definitions.h"
 #include "Exporter/Utilities/Utilities.h"
 
@@ -18,7 +19,8 @@ void Bone::SetName(std::string name) {
 }
 
 void Bone::AddChild(std::string childBoneName) {
-	for (std::string eachChildBoneName : this->childrenNames) {
+	for (auto it = this->childrenNames.begin(); it != this->childrenNames.end(); ++it) {
+		std::string eachChildBoneName = *it;
 		ASSERT(eachChildBoneName != childBoneName, "Not duplicate child bone being added (name = %s)", childBoneName.c_str());
 	}
 	this->childrenNames.push_back(childBoneName);
@@ -50,4 +52,14 @@ Bone* Armature::GetBoneByName(std::string boneName) {
 
 bool Armature::HasBoneByName(std::string boneName) {
 	return (this->bones.find(boneName) != this->bones.end());
+}
+
+Armature::Armature() {
+	this->skeletalAnimationData = nullptr;
+}
+
+Armature::~Armature() {
+	if (this->skeletalAnimationData != nullptr) {
+		delete this->skeletalAnimationData;
+	}
 }

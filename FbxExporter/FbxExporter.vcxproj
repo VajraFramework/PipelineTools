@@ -74,6 +74,7 @@
     <ClCompile Include="Source\Exporter\Definitions\Model.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Polylist.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Scene.cpp" />
+    <ClCompile Include="Source\Exporter\Definitions\SkeletalAnimationData.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Vertex.cpp" />
     <ClCompile Include="Source\Exporter\main.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.cpp" />
@@ -83,6 +84,7 @@
     <ClCompile Include="Source\Exporter\Parsers\ParseBones\ParseBones.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseMeshHelper.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseScene.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.cpp" />
     <ClCompile Include="Source\Exporter\Utilities\Utilities.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteArmature.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteScene.cpp" />
@@ -97,6 +99,7 @@
     <ClInclude Include="Source\Exporter\Definitions\Model.h" />
     <ClInclude Include="Source\Exporter\Definitions\Polylist.h" />
     <ClInclude Include="Source\Exporter\Definitions\Scene.h" />
+    <ClInclude Include="Source\Exporter\Definitions\SkeletalAnimationData.h" />
     <ClInclude Include="Source\Exporter\Definitions\Vertex.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimation.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseAnimations\ParseAnimationHelper.h" />
@@ -105,6 +108,7 @@
     <ClInclude Include="Source\Exporter\Parsers\ParseBones\ParseBones.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseMeshHelper.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseScene.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.h" />
     <ClInclude Include="Source\Exporter\Utilities\Utilities.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteArmature.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteScene.h" />

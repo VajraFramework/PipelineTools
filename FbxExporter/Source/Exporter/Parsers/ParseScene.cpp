@@ -11,6 +11,7 @@
 #include "Exporter/Parsers/ParseBones/ParseBones.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Parsers/ParseMeshHelper.h"
+#include "Exporter/Parsers/ReconstructSkeletalAnimations/ReconstructSkeletalAnimations.h"
 #include "Exporter/Utilities/Utilities.h"
 
 #include <fstream>
@@ -57,6 +58,11 @@ Scene* ParseScene(FbxManager*& fbxManager, std::string fbxFileName) {
 		ASSERT_LOG(rootNode != nullptr, "\nGot root node of the fbxScene");
 
 		ParseNodesRecursively(rootNode, scene);
+	}
+
+	{
+		// Must reconstruct skeletal animation data for any armatures that may be found:
+		ReconstructSkeletalAnimation(scene);
 	}
 
 

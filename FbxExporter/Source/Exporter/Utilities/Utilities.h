@@ -67,4 +67,7 @@ void WriteVectorOfVec2ToFile(std::vector<glm::vec2>* vectorOfVec2, std::ofstream
 //
 void WriteGlmMat4x4ToFile(glm::mat4x4 m, std::ofstream& file);
 
+#define DEFAULT_TOLERANCE_PERCENTAGE 0.2f // 0.2%
+bool areFloatsApproximatelyEqual(float a, float b, float tolerancePercentage = DEFAULT_TOLERANCE_PERCENTAGE);
+
 #endif // UTILITIES_H
