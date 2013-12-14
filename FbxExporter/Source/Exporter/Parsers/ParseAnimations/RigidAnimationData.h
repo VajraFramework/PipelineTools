@@ -28,13 +28,16 @@ public:
 	std::string GetName() { return this->name; }
 	void SetName(std::string newName);
 
+	bool hasKeyFrameAtTime(float time);
+	RigidAnimationKeyframe* GetExistingKeyframeAtTime(float time);
+
 	int GetNumKeyframes() { return this->keyframes.size(); }
 	RigidAnimationKeyframe* GetKeyframeAtIndex(unsigned int index);
 
 private:
 
 	// Utility Functions:
-	RigidAnimationKeyframe* getKeyframeAtTime(float time);
+	RigidAnimationKeyframe* getKeyframeAtTime(float time, bool canCreate = true);
 
 	std::string name;
 	std::vector<RigidAnimationKeyframe*> keyframes;

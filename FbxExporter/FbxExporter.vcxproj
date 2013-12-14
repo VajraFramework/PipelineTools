@@ -85,6 +85,7 @@
     <ClCompile Include="Source\Exporter\Parsers\ParseMeshHelper.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ParseScene.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.cpp" />
+    <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.cpp" />
     <ClCompile Include="Source\Exporter\Utilities\Utilities.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteArmature.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteScene.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\Exporter\Parsers\ParseMeshHelper.h" />
     <ClInclude Include="Source\Exporter\Parsers\ParseScene.h" />
     <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.h" />
+    <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.h" />
     <ClInclude Include="Source\Exporter\Utilities\Utilities.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteArmature.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteScene.h" />

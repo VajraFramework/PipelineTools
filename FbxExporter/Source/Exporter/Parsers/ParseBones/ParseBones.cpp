@@ -78,7 +78,7 @@ void processBoneNode(Armature* armature, Bone* bone, FbxCluster* fbxCluster) {
 		printGlmMat4x4(m);
 		printf("\n");
 		//
-		bone->bindPoseMatrix = m;
+		bone->SetBindPoseMatrix(m);
 	}
 
 	{
@@ -108,7 +108,7 @@ Armature* processSkinDeformer(FbxDeformer* fbxDeformer, FbxGeometry* affectedGeo
 		FbxCluster* fbxCluster = fbxSkin->GetCluster(clusterIdx);
 		ASSERT(fbxCluster->GetLink() != nullptr, "Link not null");
 
-		Bone* bone = new Bone();
+		Bone* bone = new Bone(armature);
 		bone->idx = clusterIdx;
 
 		processBoneNode(armature, bone, fbxCluster);

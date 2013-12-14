@@ -8,6 +8,8 @@
 #include "Exporter/Definitions/Vertex.h"
 #include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
 #include "Exporter/Parsers/ParseBones/Definitions.h"
+#include "Exporter/Parsers/ReconstructSkeletalAnimations/ReconstructSkeletalAnimations.h"
+#include "Exporter/Parsers/ReconstructSkeletalAnimations/ReplaySkeletalAnimation.h"
 #include "Exporter/Utilities/Utilities.h"
 
 #include <algorithm>
@@ -76,6 +78,10 @@ void reconstructSkeletalAnimationForModel(Model* model, Scene* scene) {
 		for (int i = 0; i < timesOfKeyframes.size(); ++i) {
 			printf("%f ", timesOfKeyframes[i]);
 		}
+	}
+
+	{
+		ReplaySkeletalAnimationIntoSkeletalAnimationData(armature, scene, timesOfKeyframes);
 	}
 }
 

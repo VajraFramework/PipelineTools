@@ -24,7 +24,7 @@ void exportBone(Bone* bone, std::ofstream& file) {
 	}
 	file << "\n";
 
-	WriteGlmMat4x4ToFile(bone->bindPoseMatrix, file);
+	WriteGlmMat4x4ToFile(bone->GetBindPoseMatrix(), file);
 }
 
 void exportArmature(Armature* armature, std::ofstream& file) {

@@ -29,7 +29,6 @@ SkeletalAnimationKeyframe* SkeletalAnimationData::GetKeyframeAtIndex(unsigned in
 }
 
 
-
 SkeletalAnimationKeyframe* SkeletalAnimationData::getKeyframeAtTime(float time) {
 	// Look for existing keyframes at that time:
 	for (int i = 0; i < this->keyframes.size(); ++i) {

@@ -52,7 +52,7 @@ RigidAnimationKeyframe* RigidAnimationData::GetKeyframeAtIndex(unsigned int inde
 	return nullptr;
 }
 
-RigidAnimationKeyframe* RigidAnimationData::getKeyframeAtTime(float time) {
+RigidAnimationKeyframe* RigidAnimationData::getKeyframeAtTime(float time, bool canCreate /* = true */) {
 	// Look for existing keyframes at that time:
 	for (int i = 0; i < this->keyframes.size(); ++i) {
 		RigidAnimationKeyframe* keyframe = this->keyframes[i];
@@ -60,6 +60,8 @@ RigidAnimationKeyframe* RigidAnimationData::getKeyframeAtTime(float time) {
 			return keyframe;
 		}
 	}
+
+	ASSERT(canCreate, "No existing key frame found at time. Can create new one");
 
 	// No existing keyframe found. Must add a new one:
 	RigidAnimationKeyframe* newKeyframe = new RigidAnimationKeyframe();
@@ -75,4 +77,19 @@ RigidAnimationKeyframe* RigidAnimationData::getKeyframeAtTime(float time) {
 	this->keyframes.insert(keyframe_it, newKeyframe);
 
 	return newKeyframe;
+}
+
+bool RigidAnimationData::hasKeyFrameAtTime(float time) {
+	// Look for existing keyframes at time:
+	for (int i = 0; i < this->keyframes.size(); ++i) {
+		RigidAnimationKeyframe* keyframe = this->keyframes[i];
+		if (areFloatsApproximatelyEqual(time, keyframe->time)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+RigidAnimationKeyframe* RigidAnimationData::GetExistingKeyframeAtTime(float time) {
+	return this->getKeyframeAtTime(time, false);
 }

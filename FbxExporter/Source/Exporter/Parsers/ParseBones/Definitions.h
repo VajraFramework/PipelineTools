@@ -8,7 +8,10 @@
 #include <string>
 #include <vector>
 
+#define MAX_BONES 50
+
 // Forward Declarations:
+class Armature;
 class SkeletalAnimationData;
 
 struct BoneInfluence {
@@ -18,7 +21,7 @@ struct BoneInfluence {
 
 class Bone {
 public:
-	Bone();
+	Bone(Armature* armature_);
 	~Bone();
 
 	int idx;
@@ -32,11 +35,34 @@ public:
 	void AddChild(std::string childBoneName);
 	std::vector<std::string> childrenNames;
 
-	glm::mat4x4 bindPoseMatrix;
+	glm::mat4 GetBindPoseMatrix() { return this->bindPoseMatrix; }
+	void SetBindPoseMatrix(glm::mat4 m);
+
+	void Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace = false);
+
+
+	glm::mat4 toWorldMatrix;
+	glm::mat4 toBoneMatrix;
 
 	std::vector<BoneInfluence*> influences;
 
 private:
+	void init();
+	void destroy();
+
+	void updateBoneMatricesRecursive();
+	void propogateRawMatrixToChildren(glm::mat4 rawMatrix);
+
+	glm::mat4 bindPoseMatrix;
+	//
+	glm::mat4 localRotationMatrix;
+	glm::mat4 localTranslationMatrix;
+	glm::mat4 localMatrixCumulative;
+
+	Armature* armature;
+
+	friend class Armature;
+
 };
 
 class Armature {
@@ -54,10 +80,14 @@ public:
 	void SetRootBoneName(std::string rootBoneName) { this->rootBoneName = rootBoneName; }
 	std::string GetRootBoneName() { return this->rootBoneName; }
 
+	void UpdateFinalBoneMatrices();
+
 	std::map<std::string /* bone name */, Bone*> bones;
 	std::string rootBoneName;
 
 	SkeletalAnimationData* skeletalAnimationData;
+
+	glm::mat4 finalBoneTransforms[MAX_BONES];
 
 private:
 };
