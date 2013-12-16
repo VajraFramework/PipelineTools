@@ -18,6 +18,8 @@
 
 void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* trootBone, Scene* scene, float time) {
 
+	trootBone->ResetLocalRotations();
+
 	Model* trootBoneModel = scene->GetModelByModelName(trootBone->name);
 	ASSERT(trootBoneModel != nullptr, "Found model for bone %s", trootBone->name.c_str());
 
@@ -75,5 +77,6 @@ void ReplaySkeletalAnimationIntoSkeletalAnimationData(Armature* armature, Scene*
 		updateFinalBoneMatricesForArmature(armature, scene);
 
 		// Add it to skeletal animation data
+		updateSkeletalAnimationDataFromArmatureForTime(armature, scene, time);
 	}
 }

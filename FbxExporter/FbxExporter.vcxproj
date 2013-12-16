@@ -88,6 +88,7 @@
     <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.cpp" />
     <ClCompile Include="Source\Exporter\Utilities\Utilities.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteArmature.cpp" />
+    <ClCompile Include="Source\Exporter\Writers\WriteBakedSkeletalAnimation.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +114,7 @@
     <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.h" />
     <ClInclude Include="Source\Exporter\Utilities\Utilities.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteArmature.h" />
+    <ClInclude Include="Source\Exporter\Writers\WriteBakedSkeletalAnimation.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

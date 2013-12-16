@@ -5,6 +5,7 @@
 
 #define MODEL_FILE_EXTENSION ".model"
 #define ANIMCLIPS_FILE_EXTENSION ".animclips"
+#define SKELETAL_ANIMATION_FILE_EXTENSION ".skeletalanimation"
 #define ARMATURE_FILE_EXTENSION ".armature"
 
 #define ANIMATION_TYPE_STRING_RIGID "RIGID"

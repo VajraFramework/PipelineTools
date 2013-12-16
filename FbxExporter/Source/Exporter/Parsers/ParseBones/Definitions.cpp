@@ -50,6 +50,10 @@ void Bone::SetBindPoseMatrix(glm::mat4 m) {
 	this->toBoneMatrix  = glm::inverse(this->toWorldMatrix);
 }
 
+void Bone::ResetLocalRotations() {
+	this->localRotationMatrix = IDENTITY_MATRIX;
+}
+
 void Bone::Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace /*= false*/) {
 	if (!boneSpace) {
 		// Axis specified in object space coordinates

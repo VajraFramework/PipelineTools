@@ -38,6 +38,7 @@ public:
 	glm::mat4 GetBindPoseMatrix() { return this->bindPoseMatrix; }
 	void SetBindPoseMatrix(glm::mat4 m);
 
+	void ResetLocalRotations();
 	void Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace = false);
 
 

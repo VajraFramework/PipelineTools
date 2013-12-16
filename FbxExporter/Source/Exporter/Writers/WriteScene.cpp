@@ -10,6 +10,7 @@
 #include "Exporter/Utilities/Utilities.h"
 #include "Exporter/Writers/WriteScene.h"
 #include "Exporter/Writers/WriteArmature.h"
+#include "Exporter/Writers/WriteBakedSkeletalAnimation.h"
 
 #include <fstream>
 #include <vector>
@@ -239,6 +240,18 @@ void exportScene(Scene* scene, std::string basePath) {
 			exportArmature(model->mesh->armature, armatureFile);
 			//
 			armatureFile.close();
+		}
+
+		// Open a new baked skeletal animation file for writing:
+		if (model->mesh != nullptr && model->mesh->armature != nullptr && model->mesh->armature->skeletalAnimationData != nullptr) {
+			std::string skeletalAnimationFilePath = basePath + model->mesh->armature->name + SKELETAL_ANIMATION_FILE_EXTENSION;
+			std::ofstream skeletalAnimationFile(skeletalAnimationFilePath, std::ios_base::out);
+			//
+			skeletalAnimationFile << SKELETAL_ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
+			//
+			exportBakedSkeletalAnimation(model->mesh->armature, skeletalAnimationFile);
+			//
+			skeletalAnimationFile.close();
 		}
 	}
 
