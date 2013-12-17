@@ -68,7 +68,10 @@ void updateSkeletalAnimationDataFromArmatureForTime(Armature* armature, Scene* s
 
 void ReplaySkeletalAnimationIntoSkeletalAnimationData(Armature* armature, Scene* scene, std::vector<float>& timesOfKeyframes) {
 	armature->skeletalAnimationData = new SkeletalAnimationData();
-	//
+
+	// TODO [Implement] Come up with a better naming scheme for skeletal animation clips based on the actual clips which will be specified by the artist in terms of keyframe numbers in a seperate file
+	armature->skeletalAnimationData->SetName(armature->name);
+
 	for (int i = 0; i < timesOfKeyframes.size(); ++i) {
 		float time = timesOfKeyframes[i];
 		replayLocalRotationsAtTime(armature, scene, time);

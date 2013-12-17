@@ -223,7 +223,7 @@ void exportScene(Scene* scene, std::string basePath) {
 		std::string animclipsFilePath = basePath + model->name + ANIMCLIPS_FILE_EXTENSION;
 		std::ofstream animclipsFile(animclipsFilePath, std::ios_base::out);
 		//
-		animclipsFile << ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
+		animclipsFile << RIGID_ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
 		//
 		exportRigidAnimations(model, animclipsFile);
 		//

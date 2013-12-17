@@ -28,11 +28,15 @@ void exportBakedSkeletalAnimation(Armature* armature, std::ofstream& file) {
 		VERIFY(0, "Failed to open skeletal animation file for armature %s", armature->name.c_str());
 	}
 
+	file << ANIMATION_TYPE_STRING_BAKED_SKELETAL << "\n\n";
+
 	ASSERT(armature->skeletalAnimationData != nullptr, "Armature has skeletal animation data");
 	SkeletalAnimationData* skeletalAnimationData = armature->skeletalAnimationData;
 
 	int numBones = armature->bones.size();
 	file << numBones << "\n\n";
+
+	file << CLIPNAME_STRING << "#" << skeletalAnimationData->GetName() << "\n";
 
 	int numKeyframes = skeletalAnimationData->GetNumKeyframes();
 	file << numKeyframes << "\n\n";
