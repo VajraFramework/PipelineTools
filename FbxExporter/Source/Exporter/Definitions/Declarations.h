@@ -3,4 +3,7 @@
 
 #define NUM_VERTICES_PER_FACE 3
 
+#define IMPORT_PATH "Resources/Import/"
+#define EXPORT_PATH "Resources/Export/Models/"
+
 #endif // EXPORTER_DEFINITIONS_DECLARATIONS_H

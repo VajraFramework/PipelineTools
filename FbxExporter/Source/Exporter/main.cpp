@@ -10,6 +10,7 @@
 ****************************************************************************************/
 
 #include "Exporter/Common/Common.h"
+#include "Exporter/Definitions/Declarations.h"
 #include "Exporter/Definitions/Mesh.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Writers/WriteScene.h"
@@ -18,23 +19,21 @@
 
 #include <iostream>
 
-// #define SAMPLE_FILENAME "Resources/Import/Assassin.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/baserig.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/flyer.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/monkey.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/TexturedCube.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/texturedCubeBlender.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/texturedCubeMaya.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/pyramid.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/twoplanes.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/SimpleCube.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/stubbyarrows.fbx"
-#define SAMPLE_FILENAME "Resources/Import/wavybox.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/bone.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/thief.fbx"
-// #define SAMPLE_FILENAME "Resources/Import/guardcaptain.fbx"
-
-#define EXPORT_PATH "Resources/Export/Models/"
+// #define SAMPLE_FILENAME "Assassin.fbx"
+// #define SAMPLE_FILENAME "baserig.fbx"
+// #define SAMPLE_FILENAME "flyer.fbx"
+// #define SAMPLE_FILENAME "monkey.fbx"
+// #define SAMPLE_FILENAME "TexturedCube.fbx"
+// #define SAMPLE_FILENAME "texturedCubeBlender.fbx"
+// #define SAMPLE_FILENAME "texturedCubeMaya.fbx"
+// #define SAMPLE_FILENAME "pyramid.fbx"
+// #define SAMPLE_FILENAME "twoplanes.fbx"
+// #define SAMPLE_FILENAME "SimpleCube.fbx"
+// #define SAMPLE_FILENAME "stubbyarrows.fbx"
+#define SAMPLE_FILENAME "wavybox.fbx"
+// #define SAMPLE_FILENAME "bone.fbx"
+// #define SAMPLE_FILENAME "thief.fbx"
+// #define SAMPLE_FILENAME "guardcaptain.fbx"
 
 int main (int argc, char** argv) {
 
@@ -44,7 +43,7 @@ int main (int argc, char** argv) {
     // Prepare the FBX SDK.
     InitializeSdkObjects(fbxManager);
 
-	Scene* scene = ParseScene(fbxManager, SAMPLE_FILENAME);
+	Scene* scene = ParseScene(fbxManager, IMPORT_PATH SAMPLE_FILENAME);
 
 	ExportSceneToModelFiles(scene, EXPORT_PATH);
 

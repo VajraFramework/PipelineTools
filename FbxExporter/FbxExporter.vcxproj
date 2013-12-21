@@ -68,6 +68,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Exporter\Common\Common.cpp" />
+    <ClCompile Include="Source\Exporter\Definitions\AnimClipKeyFrames.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Face.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Material.cpp" />
     <ClCompile Include="Source\Exporter\Definitions\Mesh.cpp" />
@@ -94,6 +95,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Exporter\Common\Common.h" />
     <ClInclude Include="Source\Exporter\Common\Declarations.h" />
+    <ClInclude Include="Source\Exporter\Definitions\AnimClipKeyFrames.h" />
     <ClInclude Include="Source\Exporter\Definitions\Declarations.h" />
     <ClInclude Include="Source\Exporter\Definitions\Face.h" />
     <ClInclude Include="Source\Exporter\Definitions\Material.h" />
