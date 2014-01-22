@@ -30,10 +30,13 @@
 // #define SAMPLE_FILENAME "twoplanes.fbx"
 // #define SAMPLE_FILENAME "SimpleCube.fbx"
 // #define SAMPLE_FILENAME "stubbyarrows.fbx"
-#define SAMPLE_FILENAME "wavybox.fbx"
+// #define SAMPLE_FILENAME "wavybox.fbx"
 // #define SAMPLE_FILENAME "bone.fbx"
 // #define SAMPLE_FILENAME "thief.fbx"
 // #define SAMPLE_FILENAME "guardcaptain.fbx"
+// #define SAMPLE_FILENAME "newthief.fbx"
+// #define SAMPLE_FILENAME "SD_Cube.fbx"
+#define SAMPLE_FILENAME "imposter.fbx"
 
 int main (int argc, char** argv) {
 

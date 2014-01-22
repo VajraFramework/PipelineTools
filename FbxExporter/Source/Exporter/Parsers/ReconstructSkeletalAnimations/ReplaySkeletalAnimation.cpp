@@ -31,9 +31,9 @@ void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* troot
 		if (rigidAnimationData->hasKeyFrameAtTime(time)) {
 			RigidAnimationKeyframe* rigidKeyframe = rigidAnimationData->GetExistingKeyframeAtTime(time);
 			glm::vec3 rotation = rigidKeyframe->rotation;
-			trootBone->Rotate(rotation.x, glm::vec3(1.0f, 0.0f, 0.0f), true);
-			trootBone->Rotate(rotation.y, glm::vec3(0.0f, 1.0f, 0.0f), true);
 			trootBone->Rotate(rotation.z, glm::vec3(0.0f, 0.0f, 1.0f), true);
+			trootBone->Rotate(rotation.y, glm::vec3(0.0f, 1.0f, 0.0f), true);
+			trootBone->Rotate(rotation.x, glm::vec3(1.0f, 0.0f, 0.0f), true);
 		}
 	}
 
