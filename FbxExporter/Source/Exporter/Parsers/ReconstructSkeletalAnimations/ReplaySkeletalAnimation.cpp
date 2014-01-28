@@ -19,6 +19,7 @@
 void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* trootBone, Scene* scene, float time) {
 
 	trootBone->ResetLocalRotations();
+	trootBone->ResetLocalTranslations();
 
 	Model* trootBoneModel = scene->GetModelByModelName(trootBone->name);
 	ASSERT(trootBoneModel != nullptr, "Found model for bone %s", trootBone->name.c_str());
@@ -30,6 +31,28 @@ void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* troot
 		RigidAnimationData* rigidAnimationData = trootBoneModel->rigidAnimationDatas->at(0);
 		if (rigidAnimationData->hasKeyFrameAtTime(time)) {
 			RigidAnimationKeyframe* rigidKeyframe = rigidAnimationData->GetExistingKeyframeAtTime(time);
+			//
+			// The translation in the rigid key frame is stored in the parent bone's co-ordinate space,
+			// but we want it in local space
+			glm::vec4 translation_in_parent_bone_space = glm::vec4(rigidKeyframe->translation.x, rigidKeyframe->translation.y, rigidKeyframe->translation.z, 0.0f);
+#if 1
+			// So, we transform the translation by the inverse of the parent's bind pose matrix:
+			glm::vec4 translation_in_local_space;
+			if (trootBone->parentName != "") {
+				Bone* parentBone = armature->GetBoneByName(trootBone->parentName);
+				translation_in_local_space = parentBone->GetBindPoseMatrix() * translation_in_parent_bone_space;
+			} else {
+				translation_in_local_space = translation_in_parent_bone_space;
+			}
+			if (translation_in_local_space != glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) {
+				trootBone->Translate(glm::length(translation_in_local_space),
+									 glm::vec3(translation_in_local_space.x, translation_in_local_space.y, translation_in_local_space.z), false);
+			}
+			// trootBone->Translate(translation.z, glm::vec3(0.0f, 0.0f, 1.0f), false);
+			// trootBone->Translate(translation.y, glm::vec3(0.0f, 1.0f, 0.0f), false);
+			// trootBone->Translate(translation.x, glm::vec3(1.0f, 0.0f, 0.0f), false);
+#endif
+			//
 			glm::vec3 rotation = rigidKeyframe->rotation;
 			trootBone->Rotate(rotation.z, glm::vec3(0.0f, 0.0f, 1.0f), true);
 			trootBone->Rotate(rotation.y, glm::vec3(0.0f, 1.0f, 0.0f), true);

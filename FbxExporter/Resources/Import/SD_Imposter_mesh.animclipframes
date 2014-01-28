@@ -1,4 +1,4 @@
-4
+6
 idle
 1 2
 twitching
@@ -7,4 +7,7 @@ turning
 6 8
 nodding
 25 35
-
+walking
+40 50
+jumping
+60 90

@@ -38,6 +38,16 @@ void Bone::SetParent(std::string parentBoneName) {
 	this->parentName = parentBoneName;
 }
 
+#include <fstream>
+static std::ofstream bindposeMatricesFile("./bindposeMatrices");
+static std::ofstream& GetBindPoseMatricesFileHandle() {
+	static bool once = false;
+	if (!once) {
+		bindposeMatricesFile.open("./bindposematrices");
+		once = true;
+	}
+}
+
 void Bone::SetBindPoseMatrix(glm::mat4 m) {
 	this->bindPoseMatrix = m;
 
@@ -46,12 +56,34 @@ void Bone::SetBindPoseMatrix(glm::mat4 m) {
 	 * it would end up in the correct place visually
 	 */
 
+
+#if 1
+	bindposeMatricesFile << std::endl;
+	bindposeMatricesFile << "bind pose matrix for bone: " << this->name.c_str() << std::endl;
+
+	for (int r = 0; r < 4; ++r) {
+		for (int c = 0; c < 4; ++c) {
+			float number = m[r][c];
+			if (abs(number) < 0.0001f) {
+				number = 0.0f;
+			}
+			bindposeMatricesFile << number << " ";
+		}
+		bindposeMatricesFile << std::endl;
+	}
+#endif
+
+
 	this->toWorldMatrix = this->bindPoseMatrix;
 	this->toBoneMatrix  = glm::inverse(this->toWorldMatrix);
 }
 
 void Bone::ResetLocalRotations() {
 	this->localRotationMatrix = IDENTITY_MATRIX;
+}
+
+void Bone::ResetLocalTranslations() {
+	this->localTranslationMatrix = IDENTITY_MATRIX;
 }
 
 void Bone::Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace /*= false*/) {
@@ -65,6 +97,18 @@ void Bone::Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace /*= false
 	if (axis != glm::vec3(0.0f, 0.0f, 0.0f)) {
 		this->localRotationMatrix = this->localRotationMatrix * glm::rotate(angleInDegrees, axis);
 	}
+}
+
+void Bone::Translate(float distance, glm::vec3 along, bool boneSpace /*= false*/) {
+	if (!boneSpace) {
+		// Along vector specified in object space coordinates
+		// Convert it to boneSPace
+		glm::vec4 newAxis = this->toBoneMatrix * glm::vec4(along.x, along.y, along.z, 0.0f);
+		along = glm::vec3(newAxis.x, newAxis.y, newAxis.z);
+	}
+
+	along = glm::normalize(along);
+	this->localTranslationMatrix = this->localTranslationMatrix * glm::translate(distance * along);
 }
 
 void Bone::init() {
@@ -84,7 +128,7 @@ void Bone::destroy() {
 
 void Bone::updateBoneMatricesRecursive() {
 	glm::mat4 matrixToPropogate = this->toWorldMatrix *
-		this->localRotationMatrix * this->localTranslationMatrix *
+		this->localTranslationMatrix * this->localRotationMatrix *
 		this->toBoneMatrix;
 	//
 	for (auto it = this->childrenNames.begin(); it != this->childrenNames.end(); ++it) {
@@ -95,7 +139,7 @@ void Bone::updateBoneMatricesRecursive() {
 
 	glm::mat4 finalBoneTransformMatrix = this->localMatrixCumulative *
 										 this->toWorldMatrix *
-										 this->localRotationMatrix * this->localTranslationMatrix;
+										 this->localTranslationMatrix * this->localRotationMatrix;
 
 	this->armature->finalBoneTransforms[this->idx] = finalBoneTransformMatrix *
 													 this->toBoneMatrix;

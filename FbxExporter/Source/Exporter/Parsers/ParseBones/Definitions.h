@@ -39,7 +39,10 @@ public:
 	void SetBindPoseMatrix(glm::mat4 m);
 
 	void ResetLocalRotations();
+	void ResetLocalTranslations();
+	//
 	void Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace = false);
+	void Translate(float distance, glm::vec3 along, bool boneSpace = false);
 
 
 	glm::mat4 toWorldMatrix;
