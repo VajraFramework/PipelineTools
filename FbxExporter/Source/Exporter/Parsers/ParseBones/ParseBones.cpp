@@ -48,6 +48,9 @@ void processBoneNode(Armature* armature, Bone* bone, FbxCluster* fbxCluster) {
 	bone->SetName(boneNode->GetName());
 	printf("\n\nProcessing bone: %s", bone->name.c_str());
 
+	// Set the bone's FbxNode:
+	bone->SetFbxNode(boneNode);
+
 	// Set bone's parent:
 	if (isNodeABone(boneNode->GetParent())) {
 		bone->SetParent(cleanUpName(boneNode->GetParent()->GetName()));

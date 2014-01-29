@@ -16,6 +16,8 @@ public:
 
 	Model* GetModelByModelName(std::string name);
 
+	void DEBUG_ExportNamesOfAllObjectsInScene();
+
 private:
 };
 

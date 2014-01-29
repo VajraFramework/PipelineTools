@@ -12,6 +12,7 @@
 #include "Exporter/Common/Common.h"
 #include "Exporter/Definitions/Declarations.h"
 #include "Exporter/Definitions/Mesh.h"
+#include "Exporter/Definitions/Scene.h"
 #include "Exporter/Parsers/ParseScene.h"
 #include "Exporter/Writers/WriteScene.h"
 
@@ -30,15 +31,16 @@
 // #define SAMPLE_FILENAME "twoplanes.fbx"
 // #define SAMPLE_FILENAME "SimpleCube.fbx"
 // #define SAMPLE_FILENAME "stubbyarrows.fbx"
-#define SAMPLE_FILENAME "wavybox.fbx"
+// #define SAMPLE_FILENAME "wavybox.fbx"
 // #define SAMPLE_FILENAME "bone.fbx"
-// #define SAMPLE_FILENAME "thief.fbx"
+#define SAMPLE_FILENAME "thief.fbx"
 // #define SAMPLE_FILENAME "guardcaptain.fbx"
 // #define SAMPLE_FILENAME "newthief.fbx"
 // #define SAMPLE_FILENAME "SD_Cube.fbx"
 // #define SAMPLE_FILENAME "imposter.fbx"
 // #define SAMPLE_FILENAME "SD_GrassFloor_A.fbx"
 // #define SAMPLE_FILENAME "SD_StoneFloor_A.fbx"
+// #define SAMPLE_FILENAME "guard.fbx"
 
 int main (int argc, char** argv) {
 
@@ -49,6 +51,8 @@ int main (int argc, char** argv) {
     InitializeSdkObjects(fbxManager);
 
 	Scene* scene = ParseScene(fbxManager, IMPORT_PATH SAMPLE_FILENAME);
+
+	scene->DEBUG_ExportNamesOfAllObjectsInScene();
 
 	ExportSceneToModelFiles(scene, EXPORT_PATH);
 

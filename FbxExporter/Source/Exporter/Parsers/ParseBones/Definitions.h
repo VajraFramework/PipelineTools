@@ -1,6 +1,7 @@
 #ifndef PARSE_BONES_DEFINITIONS_H
 #define PARSE_BONES_DEFINITIONS_H
 
+#include "FbxSdk/include/fbxsdk.h"
 
 #include "Libraries/glm/glm.hpp"
 
@@ -44,6 +45,9 @@ public:
 	void Rotate(float angleInDegrees, glm::vec3 axis, bool boneSpace = false);
 	void Translate(float distance, glm::vec3 along, bool boneSpace = false);
 
+	void SetFbxNode(FbxNode* fbxNode_) { this->fbxNode = fbxNode_; }
+	FbxNode* GetFbxNode() { return this->fbxNode; }
+
 
 	glm::mat4 toWorldMatrix;
 	glm::mat4 toBoneMatrix;
@@ -64,6 +68,8 @@ private:
 	glm::mat4 localMatrixCumulative;
 
 	Armature* armature;
+
+	FbxNode* fbxNode;
 
 	friend class Armature;
 

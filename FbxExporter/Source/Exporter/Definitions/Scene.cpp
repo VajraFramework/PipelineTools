@@ -1,5 +1,7 @@
 #include "Exporter/Definitions/Scene.h"
 
+#include <fstream>
+
 Scene::Scene() {
 	this->models = new std::vector<Model*>();
 }
@@ -19,4 +21,13 @@ Model* Scene::GetModelByModelName(std::string name) {
 		}
 	}
 	return nullptr;
+}
+
+void Scene::DEBUG_ExportNamesOfAllObjectsInScene() {
+	std::ofstream file("./modelnamesinscene");
+	for (auto it = this->models->begin(); it != this->models->end(); ++it) {
+		Model* model = *it;
+		file << model->name.c_str();
+		file << std::endl;
+	}
 }

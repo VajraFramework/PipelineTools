@@ -12,9 +12,46 @@
 #include "Exporter/Parsers/ReconstructSkeletalAnimations/ReplaySkeletalAnimation.h"
 #include "Exporter/Utilities/Utilities.h"
 
+#include "Libraries/glm/glm.hpp"
+#include "Libraries/glm/gtc/quaternion.hpp"
+#include "Libraries/glm/gtx/quaternion.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <vector>
+
+Model* getParentModelForBone(Bone* bone, Scene* scene) {
+	FbxNode* parentFbxNode = bone->GetFbxNode()->GetParent();
+	if (parentFbxNode != nullptr) {
+		std::string parentName = parentFbxNode->GetName();
+		// TODO [Cleanup] Move this somewhere else, along with the code in Model::SetName()
+		// Clean it up a little:
+		size_t colonPos = parentName.find(":");
+		while (colonPos != std::string::npos) {
+			parentName.replace(colonPos, 1, "_");
+			colonPos = parentName.find(":");
+		}
+		Model* parentModel = scene->GetModelByModelName(parentName.c_str());
+		return parentModel;
+	}
+	return nullptr;
+}
+
+glm::quat convertEulerAnglesToQuaternion(float x, float y, float z) {
+	glm::quat qx = glm::angleAxis(x, glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::quat qy = glm::angleAxis(y, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::quat qz = glm::angleAxis(z, glm::vec3(0.0f, 0.0f, 1.0f));
+	//
+	return (qz * qy * qx);
+}
+
+glm::vec3 concatenateEulerRotations(glm::vec3 rotation1, glm::vec3 rotation2) {
+	glm::quat q1 = convertEulerAnglesToQuaternion(rotation1.x, rotation1.y, rotation1.z);
+	glm::quat q2 = convertEulerAnglesToQuaternion(rotation2.x, rotation2.y, rotation2.z);
+
+	glm::vec3 eulerAngles = glm::eulerAngles(q2 * q1);
+	return eulerAngles;
+}
 
 void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* trootBone, Scene* scene, float time) {
 
@@ -44,7 +81,18 @@ void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* troot
 				translation_to_apply = total_translation - temp_matrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 			} else {
 				translation_to_apply = total_translation;
-				// translation_in_local_space = translation_in_parent_bone_space;
+				// Also, since this bone has no parent in the armature heirarchy, it may be childed to another regular object which may be moving around
+				// If so, we have to respect that
+				Model* parentModel = getParentModelForBone(trootBone, scene);
+				if (parentModel != nullptr) {
+					if (parentModel->rigidAnimationDatas->size() != 0) {
+						RigidAnimationData* parentRigidAnimationData = parentModel->rigidAnimationDatas->at(0);
+						if (parentRigidAnimationData->hasKeyFrameAtTime(time)) {
+							RigidAnimationKeyframe* parentRigidKeyframe = parentRigidAnimationData->GetExistingKeyframeAtTime(time);
+							translation_to_apply += glm::vec4(parentRigidKeyframe->translation.x, parentRigidKeyframe->translation.y, parentRigidKeyframe->translation.z, 0.0f);
+						}
+					}
+				}
 			}
 			if (translation_to_apply.x != 0.0f || translation_to_apply.y != 0.0f || translation_to_apply.z != 0.0f) {
 				trootBone->Translate(glm::length(translation_to_apply),
@@ -56,6 +104,20 @@ void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* troot
 #endif
 			//
 			glm::vec3 rotation = rigidKeyframe->rotation;
+			//
+			if (trootBone->parentName == "") {
+				// Also, since this bone has no parent in the armature heirarchy, it may be childed to another regular object which may be moving around
+				// If so, we have to respect that
+				Model* parentModel = getParentModelForBone(trootBone, scene);
+				if (parentModel->rigidAnimationDatas->size() != 0) {
+					RigidAnimationData* parentRigidAnimationData = parentModel->rigidAnimationDatas->at(0);
+					if (parentRigidAnimationData->hasKeyFrameAtTime(time)) {
+						RigidAnimationKeyframe* parentRigidKeyframe = parentRigidAnimationData->GetExistingKeyframeAtTime(time);
+						rotation = concatenateEulerRotations(rotation, parentRigidKeyframe->rotation);
+					}
+				}
+			}
+			//
 			trootBone->Rotate(rotation.z, glm::vec3(0.0f, 0.0f, 1.0f), true);
 			trootBone->Rotate(rotation.y, glm::vec3(0.0f, 1.0f, 0.0f), true);
 			trootBone->Rotate(rotation.x, glm::vec3(1.0f, 0.0f, 0.0f), true);
