@@ -48,6 +48,19 @@ static std::ofstream& GetBindPoseMatricesFileHandle() {
 	}
 }
 
+void printGlmMatrixToFile(std::ofstream& file, glm::mat4 m) {
+	for (int r = 0; r < 4; ++r) {
+		for (int c = 0; c < 4; ++c) {
+			float number = m[r][c];
+			if (abs(number) < 0.0001f) {
+				number = 0.0f;
+			}
+			file << number << " ";
+		}
+		file << std::endl;
+	}
+}
+
 void Bone::SetBindPoseMatrix(glm::mat4 m) {
 	this->bindPoseMatrix = m;
 
@@ -59,18 +72,18 @@ void Bone::SetBindPoseMatrix(glm::mat4 m) {
 
 #if 1
 	bindposeMatricesFile << std::endl;
-	bindposeMatricesFile << "bind pose matrix for bone: " << this->name.c_str() << std::endl;
 
-	for (int r = 0; r < 4; ++r) {
-		for (int c = 0; c < 4; ++c) {
-			float number = m[r][c];
-			if (abs(number) < 0.0001f) {
-				number = 0.0f;
-			}
-			bindposeMatricesFile << number << " ";
-		}
-		bindposeMatricesFile << std::endl;
-	}
+	bindposeMatricesFile << "bind pose matrix for bone: " << this->name.c_str() << std::endl;
+	printGlmMatrixToFile(bindposeMatricesFile, m);
+	//
+	bindposeMatricesFile << "inverse of bind pose matrix for bone: " << this->name.c_str() << std::endl;
+	printGlmMatrixToFile(bindposeMatricesFile, glm::inverse(m));
+	//
+	bindposeMatricesFile << "transpose of bind pose matrix for bone: " << this->name.c_str() << std::endl;
+	printGlmMatrixToFile(bindposeMatricesFile, glm::transpose(m));
+
+	bindposeMatricesFile << std::endl;
+	
 #endif
 
 

@@ -34,19 +34,21 @@ void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* troot
 			//
 			// The translation in the rigid key frame is stored in the parent bone's co-ordinate space,
 			// but we want it in local space
-			glm::vec4 translation_in_parent_bone_space = glm::vec4(rigidKeyframe->translation.x, rigidKeyframe->translation.y, rigidKeyframe->translation.z, 0.0f);
+			glm::vec4 total_translation = glm::vec4(rigidKeyframe->translation.x, rigidKeyframe->translation.y, rigidKeyframe->translation.z, 1.0f);
 #if 1
 			// So, we transform the translation by the inverse of the parent's bind pose matrix:
-			glm::vec4 translation_in_local_space;
+			glm::vec4 translation_to_apply;
 			if (trootBone->parentName != "") {
 				Bone* parentBone = armature->GetBoneByName(trootBone->parentName);
-				translation_in_local_space = parentBone->GetBindPoseMatrix() * translation_in_parent_bone_space;
+				glm::mat4 temp_matrix = glm::inverse(parentBone->GetBindPoseMatrix()) * trootBone->GetBindPoseMatrix();
+				translation_to_apply = total_translation - temp_matrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 			} else {
-				translation_in_local_space = translation_in_parent_bone_space;
+				translation_to_apply = total_translation;
+				// translation_in_local_space = translation_in_parent_bone_space;
 			}
-			if (translation_in_local_space != glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) {
-				trootBone->Translate(glm::length(translation_in_local_space),
-									 glm::vec3(translation_in_local_space.x, translation_in_local_space.y, translation_in_local_space.z), false);
+			if (translation_to_apply.x != 0.0f || translation_to_apply.y != 0.0f || translation_to_apply.z != 0.0f) {
+				trootBone->Translate(glm::length(translation_to_apply),
+									 glm::vec3(translation_to_apply.x, translation_to_apply.y, translation_to_apply.z), false);
 			}
 			// trootBone->Translate(translation.z, glm::vec3(0.0f, 0.0f, 1.0f), false);
 			// trootBone->Translate(translation.y, glm::vec3(0.0f, 1.0f, 0.0f), false);
