@@ -41,6 +41,7 @@
 // #define SAMPLE_FILENAME "SD_GrassFloor_A.fbx"
 // #define SAMPLE_FILENAME "SD_StoneFloor_A.fbx"
 // #define SAMPLE_FILENAME "guard.fbx"
+// #define SAMPLE_FILENAME "SD_Plane_01.fbx"
 
 int main (int argc, char** argv) {
 

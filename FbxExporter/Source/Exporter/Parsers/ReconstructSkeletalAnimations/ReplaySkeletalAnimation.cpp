@@ -80,7 +80,10 @@ void replayLocalRotationsAtTimeForBone_recursive(Armature* armature, Bone* troot
 				glm::mat4 temp_matrix = glm::inverse(parentBone->GetBindPoseMatrix()) * trootBone->GetBindPoseMatrix();
 				translation_to_apply = total_translation - temp_matrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 			} else {
-				translation_to_apply = total_translation;
+				// TODO [Hack] Subtract the total_translation in the first frame from the total_translation here
+				translation_to_apply = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+				// translation_to_apply = total_translation;
+
 				// Also, since this bone has no parent in the armature heirarchy, it may be childed to another regular object which may be moving around
 				// If so, we have to respect that
 				Model* parentModel = getParentModelForBone(trootBone, scene);
