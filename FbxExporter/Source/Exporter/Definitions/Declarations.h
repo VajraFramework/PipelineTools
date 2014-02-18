@@ -4,6 +4,8 @@
 #define NUM_VERTICES_PER_FACE 3
 
 #define IMPORT_PATH "Resources/Import/"
-#define EXPORT_PATH "Resources/Export/Models/"
+#define EXPORT_PATH_BASE "Resources/Export/"
+#define EXPORT_FOLDER_MODELS "Models/"
+#define EXPORT_FOLDER_ANIMCLIPS "Animclips/"
 
 #endif // EXPORTER_DEFINITIONS_DECLARATIONS_H

@@ -65,7 +65,7 @@ int main (int argc, char** argv) {
     InitializeSdkObjects(fbxManager);
 
 	std::vector<std::string> fileNamesForImport = GetFbxFileNamesForImport();
-	bool EXPORT_ALL_TO_ONE_FOLDER = false;
+	bool EXPORT_ALL_TO_ONE_FOLDER = true;
 
 	for (unsigned int i = 0; i < fileNamesForImport.size(); ++i) {
 
@@ -77,12 +77,16 @@ int main (int argc, char** argv) {
 
 		if (!EXPORT_ALL_TO_ONE_FOLDER) {
 			std::string exportFolderName = fbxFileName.substr(0, fbxFileName.find("."));
-			FileUtilities::CreateFolder(EXPORT_PATH + exportFolderName);
-			ExportSceneToModelFiles(scene, EXPORT_PATH + exportFolderName + "/");
+			FileUtilities::CreateFolder(EXPORT_PATH_BASE + exportFolderName);
+			FileUtilities::CreateFolder(EXPORT_PATH_BASE + exportFolderName + "/" EXPORT_FOLDER_MODELS);
+			FileUtilities::CreateFolder(EXPORT_PATH_BASE + exportFolderName + "/" EXPORT_FOLDER_ANIMCLIPS);
+			ExportSceneToModelFiles(scene, EXPORT_PATH_BASE + exportFolderName + "/");
 
 		} else {
-			FileUtilities::CreateFolder(EXPORT_PATH);
-			ExportSceneToModelFiles(scene, EXPORT_PATH);
+			FileUtilities::CreateFolder(EXPORT_PATH_BASE);
+			FileUtilities::CreateFolder(EXPORT_PATH_BASE EXPORT_FOLDER_MODELS);
+			FileUtilities::CreateFolder(EXPORT_PATH_BASE EXPORT_FOLDER_ANIMCLIPS);
+			ExportSceneToModelFiles(scene, EXPORT_PATH_BASE);
 		}
 	}
 

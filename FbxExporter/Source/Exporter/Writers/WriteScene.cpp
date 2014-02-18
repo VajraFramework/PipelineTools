@@ -200,6 +200,9 @@ void exportRigidAnimations(Model* model, std::ofstream& file) {
 }
 
 void exportScene(Scene* scene, std::string basePath) {
+	std::string modelsPath = basePath + EXPORT_FOLDER_MODELS;
+	std::string animclipsPath = basePath + EXPORT_FOLDER_ANIMCLIPS;
+
 	int numModelsInScene = scene->models->size();
 	printf("\nNumber of models in scene: %d", numModelsInScene);
 
@@ -209,30 +212,34 @@ void exportScene(Scene* scene, std::string basePath) {
 
 
 		// Open new model file for writing:
-		std::string modelFilePath = basePath + model->name + MODEL_FILE_EXTENSION;
-		std::ofstream modelFile(modelFilePath, std::ios_base::out);
-		//
-		modelFile << MODEL_FORMAT_VERSION_NUMBER << "\n";
-		//
-		exportModel(model, modelFile);
-		//
-		modelFile.close();
+		if (model->mesh != nullptr) {
+			std::string modelFilePath = modelsPath + model->name + MODEL_FILE_EXTENSION;
+			std::ofstream modelFile(modelFilePath, std::ios_base::out);
+			//
+			modelFile << MODEL_FORMAT_VERSION_NUMBER << "\n";
+			//
+			exportModel(model, modelFile);
+			//
+			modelFile.close();
+		}
 
 
 		// Open a new animclips file for writing:
-		std::string animclipsFilePath = basePath + model->name + ANIMCLIPS_FILE_EXTENSION;
-		std::ofstream animclipsFile(animclipsFilePath, std::ios_base::out);
-		//
-		animclipsFile << RIGID_ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
-		//
-		exportRigidAnimations(model, animclipsFile);
-		//
-		animclipsFile.close();
+		if (model->rigidAnimationDatas->size() != 0) {
+			std::string animclipsFilePath = animclipsPath +  model->name + ANIMCLIPS_FILE_EXTENSION;
+			std::ofstream animclipsFile(animclipsFilePath, std::ios_base::out);
+			//
+			animclipsFile << RIGID_ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
+			//
+			exportRigidAnimations(model, animclipsFile);
+			//
+			animclipsFile.close();
+		}
 
 
 		// Open a new armature file for writing:
 		if (model->mesh != nullptr && model->mesh->armature != nullptr) {
-			std::string armatureFilePath = basePath + model->mesh->armature->name + ARMATURE_FILE_EXTENSION;
+			std::string armatureFilePath = modelsPath + model->mesh->armature->name + ARMATURE_FILE_EXTENSION;
 			std::ofstream armatureFile(armatureFilePath, std::ios_base::out);
 			//
 			armatureFile << ARMATURE_FORMAT_VERSION_NUMBER  << "\n";
@@ -244,7 +251,7 @@ void exportScene(Scene* scene, std::string basePath) {
 
 		// Open a new baked skeletal animation file for writing:
 		if (model->mesh != nullptr && model->mesh->armature != nullptr && model->mesh->armature->skeletalAnimationData != nullptr) {
-			std::string skeletalAnimationFilePath = basePath + model->mesh->armature->name + SKELETAL_ANIMATION_FILE_EXTENSION;
+			std::string skeletalAnimationFilePath = modelsPath + model->mesh->armature->name + SKELETAL_ANIMATION_FILE_EXTENSION;
 			std::ofstream skeletalAnimationFile(skeletalAnimationFilePath, std::ios_base::out);
 			//
 			skeletalAnimationFile << SKELETAL_ANIMATION_FORMAT_VERSION_NUMBER  << "\n";
