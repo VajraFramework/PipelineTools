@@ -83,6 +83,9 @@
     <ClCompile Include="Source\Exporter\Definitions\AnimClipKeyFrames.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Exporter\Utilities\FileUtilities\FileUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Exporter\Common\Common.h">
@@ -138,5 +141,7 @@
     <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteBakedSkeletalAnimation.h" />
     <ClInclude Include="Source\Exporter\Definitions\AnimClipKeyFrames.h" />
+    <ClInclude Include="Source\Exporter\Utilities\FileUtilities\FileUtilities.h" />
+    <ClInclude Include="Source\Exporter\Utilities\FileUtilities\dirent.h" />
   </ItemGroup>
 </Project>

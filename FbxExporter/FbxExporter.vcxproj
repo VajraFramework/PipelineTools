@@ -87,6 +87,7 @@
     <ClCompile Include="Source\Exporter\Parsers\ParseScene.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.cpp" />
     <ClCompile Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.cpp" />
+    <ClCompile Include="Source\Exporter\Utilities\FileUtilities\FileUtilities.cpp" />
     <ClCompile Include="Source\Exporter\Utilities\Utilities.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteArmature.cpp" />
     <ClCompile Include="Source\Exporter\Writers\WriteBakedSkeletalAnimation.cpp" />
@@ -114,6 +115,8 @@
     <ClInclude Include="Source\Exporter\Parsers\ParseScene.h" />
     <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReconstructSkeletalAnimations.h" />
     <ClInclude Include="Source\Exporter\Parsers\ReconstructSkeletalAnimations\ReplaySkeletalAnimation.h" />
+    <ClInclude Include="Source\Exporter\Utilities\FileUtilities\dirent.h" />
+    <ClInclude Include="Source\Exporter\Utilities\FileUtilities\FileUtilities.h" />
     <ClInclude Include="Source\Exporter\Utilities\Utilities.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteArmature.h" />
     <ClInclude Include="Source\Exporter\Writers\WriteBakedSkeletalAnimation.h" />

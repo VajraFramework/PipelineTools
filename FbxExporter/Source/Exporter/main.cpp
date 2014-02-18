@@ -14,6 +14,7 @@
 #include "Exporter/Definitions/Mesh.h"
 #include "Exporter/Definitions/Scene.h"
 #include "Exporter/Parsers/ParseScene.h"
+#include "Exporter/Utilities/FileUtilities/FileUtilities.h"
 #include "Exporter/Writers/WriteScene.h"
 
 #include "FbxSdk/include/fbxsdk.h"
@@ -43,6 +44,18 @@
 // #define SAMPLE_FILENAME "guard.fbx"
 // #define SAMPLE_FILENAME "SD_Plane_01.fbx"
 
+std::vector<std::string> GetFbxFileNamesForImport() {
+	std::vector<std::string> fileNames = FileUtilities::GetFileNamesInFolder(IMPORT_PATH);
+	std::vector<std::string> fbxFileNamesForImport;
+	for (unsigned int i = 0; i < fileNames.size(); ++i) {
+		if (fileNames[i].find(".fbx") != std::string::npos) {
+			fbxFileNamesForImport.push_back(fileNames[i]);
+		}
+	}
+	return fbxFileNamesForImport;
+}
+
+
 int main (int argc, char** argv) {
 
     FbxManager* fbxManager = NULL;
@@ -51,11 +64,27 @@ int main (int argc, char** argv) {
     // Prepare the FBX SDK.
     InitializeSdkObjects(fbxManager);
 
-	Scene* scene = ParseScene(fbxManager, IMPORT_PATH SAMPLE_FILENAME);
+	std::vector<std::string> fileNamesForImport = GetFbxFileNamesForImport();
+	bool EXPORT_ALL_TO_ONE_FOLDER = false;
 
-	scene->DEBUG_ExportNamesOfAllObjectsInScene();
+	for (unsigned int i = 0; i < fileNamesForImport.size(); ++i) {
 
-	ExportSceneToModelFiles(scene, EXPORT_PATH);
+		std::string fbxFileName = fileNamesForImport[i];
+
+		Scene* scene = ParseScene(fbxManager, IMPORT_PATH + fbxFileName);
+
+		scene->DEBUG_ExportNamesOfAllObjectsInScene();
+
+		if (!EXPORT_ALL_TO_ONE_FOLDER) {
+			std::string exportFolderName = fbxFileName.substr(0, fbxFileName.find("."));
+			FileUtilities::CreateFolder(EXPORT_PATH + exportFolderName);
+			ExportSceneToModelFiles(scene, EXPORT_PATH + exportFolderName + "/");
+
+		} else {
+			FileUtilities::CreateFolder(EXPORT_PATH);
+			ExportSceneToModelFiles(scene, EXPORT_PATH);
+		}
+	}
 
     //Destroy all objects created by the FBX SDK.
     DestroySdkObjects(fbxManager, true);
