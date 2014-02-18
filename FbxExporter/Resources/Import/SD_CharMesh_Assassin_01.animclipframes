@@ -1,11 +1,11 @@
 5
-walking
-10 30
 idle
-50 60
+1 96
+walking
+40 60
 special_posing
-70 74
+70 75
 special_action
-74 84
+75 80
 special_end
-84 95
+80 85

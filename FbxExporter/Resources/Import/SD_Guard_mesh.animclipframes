@@ -1,5 +1,9 @@
-2
+4
+idle
+10 20
 walking
-10 30
-jumping
-50 70
+30 40
+guard
+50 60
+special
+70 80

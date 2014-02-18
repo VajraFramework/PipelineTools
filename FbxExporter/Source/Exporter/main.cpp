@@ -20,7 +20,7 @@
 
 #include <iostream>
 
-// #define SAMPLE_FILENAME "Assassin.fbx"
+#define SAMPLE_FILENAME "assassin.fbx"
 // #define SAMPLE_FILENAME "baserig.fbx"
 // #define SAMPLE_FILENAME "flyer.fbx"
 // #define SAMPLE_FILENAME "monkey.fbx"
@@ -33,7 +33,7 @@
 // #define SAMPLE_FILENAME "stubbyarrows.fbx"
 // #define SAMPLE_FILENAME "wavybox.fbx"
 // #define SAMPLE_FILENAME "bone.fbx"
-#define SAMPLE_FILENAME "thief.fbx"
+// #define SAMPLE_FILENAME "thief.fbx"
 // #define SAMPLE_FILENAME "guardcaptain.fbx"
 // #define SAMPLE_FILENAME "newthief.fbx"
 // #define SAMPLE_FILENAME "SD_Cube.fbx"
