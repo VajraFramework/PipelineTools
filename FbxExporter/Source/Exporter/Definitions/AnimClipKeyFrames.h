@@ -3,7 +3,9 @@
 
 #include "Exporter/Definitions/Declarations.h"
 
+#include <fstream>
 #include <string>
+#include <vector>
 
 class AnimClipKeyframes {
 public:
@@ -15,5 +17,7 @@ public:
 
 private:
 };
+
+std::vector<AnimClipKeyframes*> extractAnimclipKeyframeNumbersFromFile(std::string filePath);
 
 #endif // ANIMCLIP_KEYFRAMES_H

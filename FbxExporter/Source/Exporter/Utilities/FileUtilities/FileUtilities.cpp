@@ -1,5 +1,7 @@
 #include "Exporter/Utilities/FileUtilities/FileUtilities.h"
 
+#include <algorithm>
+
 #include <direct.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -29,4 +31,9 @@ std::vector<std::string> FileUtilities::GetFileNamesInFolder(std::string pathToF
 	}
 
 	return fileNames;
+}
+
+bool FileUtilities::FileExistsInFolder(std::string pathToFolder, std::string fileName) {
+	std::vector<std::string> filenamesInFolder = FileUtilities::GetFileNamesInFolder(pathToFolder);
+	return (std::find(filenamesInFolder.begin(), filenamesInFolder.end(), fileName) != filenamesInFolder.end());
 }

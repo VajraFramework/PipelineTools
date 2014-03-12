@@ -1,4 +1,5 @@
 #include "Exporter/Common/Declarations.h"
+#include "Exporter/Definitions/AnimClipKeyframes.h"
 #include "Exporter/Definitions/Face.h"
 #include "Exporter/Definitions/Material.h"
 #include "Exporter/Definitions/Mesh.h"
@@ -7,6 +8,7 @@
 #include "Exporter/Definitions/Scene.h"
 #include "Exporter/Parsers/ParseAnimations/RigidAnimationData.h"
 #include "Exporter/Parsers/ParseBones/Definitions.h"
+#include "Exporter/Utilities/FileUtilities/FileUtilities.h"
 #include "Exporter/Utilities/Utilities.h"
 #include "Exporter/Writers/WriteScene.h"
 #include "Exporter/Writers/WriteArmature.h"
@@ -157,19 +159,16 @@ void exportModel(Model* model, std::ofstream& file) {
 	printf("\n");
 }
 
-void exportRigidAnimation(Model* model, RigidAnimationData* rigidAnimationData, std::ofstream& file) {
-	printf("\nExporting rigidAnimationData for clip: %s", rigidAnimationData->GetName().c_str());
+void exportRigidAnimationKeyframe(Model* model, RigidAnimationKeyframe* keyframe, std::ofstream& file) {
 
 	if (!file.good()) {
 		VERIFY(0, "Failed to open animclips file for model %s", model->name.c_str());
 	}
 
-	file << CLIPNAME_STRING << "#" << rigidAnimationData->GetName() << "\n";
-
-	int numKeyframes = rigidAnimationData->GetNumKeyframes();
-	file << numKeyframes << "\n";
-	for (int i = 0; i < numKeyframes; ++i) {
-		RigidAnimationKeyframe* keyframe = rigidAnimationData->GetKeyframeAtIndex(i);
+	// int numKeyframes = rigidAnimationData->GetNumKeyframes();
+	// file << numKeyframes << "\n";
+	// for (int i = 0; i < numKeyframes; ++i) {
+		// RigidAnimationKeyframe* keyframe = rigidAnimationData->GetKeyframeAtIndex(i);
 
 		file << keyframe->time << " ";
 		WriteGlmVec3ToFile(keyframe->translation, file);  file << " ";
@@ -177,7 +176,7 @@ void exportRigidAnimation(Model* model, RigidAnimationData* rigidAnimationData, 
 		WriteGlmVec3ToFile(keyframe->scaling, file);  file << " ";
 
 		file << "\n";
-	}
+	// }
 }
 
 void exportRigidAnimations(Model* model, std::ofstream& file) {
@@ -189,14 +188,38 @@ void exportRigidAnimations(Model* model, std::ofstream& file) {
 
 	file << ANIMATION_TYPE_STRING_RIGID << "\n\n";
 
-	int numRigidAnimations = model->rigidAnimationDatas->size();
-	file << numRigidAnimations << "\n\n";
-
-	for (int i = 0; i < numRigidAnimations; ++i) {
-		RigidAnimationData* rigidAnimationData = model->rigidAnimationDatas->at(i);
-		exportRigidAnimation(model, rigidAnimationData, file);
+	// Get the names of the animation clips and their respective keyframes:
+	std::string animclipKeyframesFileName = model->name;
+	animclipKeyframesFileName += ".animclipframes";
+	std::vector<AnimClipKeyframes*> vectorOfAnimclipKeyframes;
+	if (FileUtilities::FileExistsInFolder(IMPORT_PATH, animclipKeyframesFileName)) {
+		vectorOfAnimclipKeyframes = extractAnimclipKeyframeNumbersFromFile(IMPORT_PATH + animclipKeyframesFileName);
 	}
 
+	int numRigidAnimations = vectorOfAnimclipKeyframes.size();
+	file << numRigidAnimations << "\n\n";
+
+	// TODO [Hack]
+	RigidAnimationData* rigidAnimationData = model->rigidAnimationDatas->at(0);
+
+	for (unsigned int i = 0; i < vectorOfAnimclipKeyframes.size(); ++i) {
+		file << CLIPNAME_STRING << "#" << vectorOfAnimclipKeyframes[i]->clipName << "\n";
+
+		int numKeyframes = vectorOfAnimclipKeyframes[i]->endKeyframeNumber - vectorOfAnimclipKeyframes[i]->startKeyframeNumber + 1;
+		file << numKeyframes << "\n\n";
+
+		ASSERT(vectorOfAnimclipKeyframes[i]->startKeyframeNumber <= skeletalAnimationData->GetNumKeyframes(), "Valid start keyframe number: %d", vectorOfAnimclipKeyframes[i]->startKeyframeNumber);
+		ASSERT(vectorOfAnimclipKeyframes[i]->endKeyframeNumber <= skeletalAnimationData->GetNumKeyframes(), "Valid end keyframe number: %d", vectorOfAnimclipKeyframes[i]->endKeyframeNumber);
+		
+		for (int frameNumber = vectorOfAnimclipKeyframes[i]->startKeyframeNumber; frameNumber <= vectorOfAnimclipKeyframes[i]->endKeyframeNumber; ++frameNumber) {
+			// Note that frameNumbers start from 1 instead of 0, adjust accordingly:
+			int frameNumberIdx = frameNumber - 1;
+			//
+			exportRigidAnimationKeyframe(model, rigidAnimationData->GetKeyframeAtIndex(frameNumberIdx), file);
+		}
+
+		file << "\n";
+	}
 }
 
 void exportScene(Scene* scene, std::string basePath) {

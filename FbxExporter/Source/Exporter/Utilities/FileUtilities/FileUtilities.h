@@ -10,6 +10,7 @@
 namespace FileUtilities {
 	void CreateFolder(std::string pathToFolder);
 	std::vector<std::string> GetFileNamesInFolder(std::string pathToFolder);
+	bool FileExistsInFolder(std::string pathToFolder, std::string fileName);
 };
 
 #endif // FILE_UTILITIES_H
