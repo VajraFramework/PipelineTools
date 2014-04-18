@@ -1,0 +1,323 @@
+
+bind pose matrix for bone: SD_GuardCaptain_root
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 12.3363 0 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_root
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 -12.3363 0 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_root
+1 0 0 0 
+0 1 0 12.3363 
+0 0 1 0 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_back
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 14 0.246612 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_back
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 -14 -0.246612 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_back
+1 0 0 0 
+0 1 0 14 
+0 0 1 0.246612 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_neck
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 19.9662 0.119067 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_neck
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 -19.9662 -0.119067 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_neck
+1 0 0 0 
+0 1 0 19.9662 
+0 0 1 0.119067 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_head
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 21.3045 -0.372826 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_head
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 -21.3045 0.372826 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_head
+1 0 0 0 
+0 1 0 21.3045 
+0 0 1 -0.372826 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_skull
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 26 0 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_skull
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 -26 0 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_skull
+1 0 0 0 
+0 1 0 26 
+0 0 1 0 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_leftshoulder
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+2.58933 19.2816 -0.373996 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_leftshoulder
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-2.58933 -19.2816 0.373996 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_leftshoulder
+1 0 0 2.58933 
+0 1 0 19.2816 
+0 0 1 -0.373996 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_leftelbow
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+7.38835 19.2816 -0.852493 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_leftelbow
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-7.38835 -19.2816 0.852493 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_leftelbow
+1 0 0 7.38835 
+0 1 0 19.2816 
+0 0 1 -0.852493 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_leftwrist
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+11.6259 19.2816 -0.628272 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_leftwrist
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-11.6259 -19.2816 0.628272 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_leftwrist
+1 0 0 11.6259 
+0 1 0 19.2816 
+0 0 1 -0.628272 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_rightshoulder
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-2.63695 19.5129 -0.211988 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_rightshoulder
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+2.63695 -19.5129 0.211988 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_rightshoulder
+1 0 0 -2.63695 
+0 1 0 19.5129 
+0 0 1 -0.211988 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_rightelbow
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-7.38946 19.5129 -0.635616 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_rightelbow
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+7.38946 -19.5129 0.635616 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_rightelbow
+1 0 0 -7.38946 
+0 1 0 19.5129 
+0 0 1 -0.635616 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_rightwrist
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-11.4844 19.5129 -0.446589 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_rightwrist
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+11.4844 -19.5129 0.446589 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_rightwrist
+1 0 0 -11.4844 
+0 1 0 19.5129 
+0 0 1 -0.446589 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_leftthigh
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.71011 12.6628 0.102576 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_leftthigh
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.71011 -12.6628 -0.102576 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_leftthigh
+1 0 0 1.71011 
+0 1 0 12.6628 
+0 0 1 0.102576 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_leftknee
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.71011 6.32551 0.167705 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_leftknee
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.71011 -6.32551 -0.167705 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_leftknee
+1 0 0 1.71011 
+0 1 0 6.32551 
+0 0 1 0.167705 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_leftankle
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.71011 1.48775 -0.289957 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_leftankle
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.71011 -1.48775 0.289957 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_leftankle
+1 0 0 1.71011 
+0 1 0 1.48775 
+0 0 1 -0.289957 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_lefttoe
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.71011 0.189915 2.5538 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_lefttoe
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.71011 -0.189915 -2.5538 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_lefttoe
+1 0 0 1.71011 
+0 1 0 0.189915 
+0 0 1 2.5538 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_rightthigh
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.6014 12.6628 0.102576 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_rightthigh
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.6014 -12.6628 -0.102576 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_rightthigh
+1 0 0 -1.6014 
+0 1 0 12.6628 
+0 0 1 0.102576 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_rightknee
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.6014 6.32551 0.167705 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_rightknee
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.6014 -6.32551 -0.167705 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_rightknee
+1 0 0 -1.6014 
+0 1 0 6.32551 
+0 0 1 0.167705 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_rightankle
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.6014 1.48775 -0.289957 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_rightankle
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.6014 -1.48775 0.289957 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_rightankle
+1 0 0 -1.6014 
+0 1 0 1.48775 
+0 0 1 -0.289957 
+0 0 0 1 
+
+
+bind pose matrix for bone: SD_GuardCaptain_righttoe
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+-1.6014 0.189915 2.5538 1 
+inverse of bind pose matrix for bone: SD_GuardCaptain_righttoe
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+1.6014 -0.189915 -2.5538 1 
+transpose of bind pose matrix for bone: SD_GuardCaptain_righttoe
+1 0 0 -1.6014 
+0 1 0 0.189915 
+0 0 1 2.5538 
+0 0 0 1 
+

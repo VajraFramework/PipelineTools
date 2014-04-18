@@ -1,9 +1,15 @@
-4
+7
 idle
-10 20
+10 25
+block
+26 50
+block_idle
+51 75
+special_action
+76 93
+special_end
+94 100
 walking
-30 40
-guard
-50 60
-special
-70 80
+105 132
+death
+133 150
